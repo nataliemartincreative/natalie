@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Miss Eaves — A Really Amazing Typeface</title>
+<meta name="description" content="Miss Eaves: an original high-contrast display typeface. See the whole character set, play with it live, and take it home." />
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="preload" href="fonts/MissEaves.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ░░░ Splash ░░░ -->
+  <div id="splash" class="splash">
+    <div class="splash-inner">
+      <div class="splash-rule top"></div>
+      <h1 class="splash-word" aria-label="Miss Eaves">
+        <span>M</span><span>i</span><span>s</span><span>s</span>
+        <span class="sp">&nbsp;</span>
+        <span>E</span><span>a</span><span>v</span><span>e</span><span>s</span>
+      </h1>
+      <p class="splash-sub">A&nbsp;&nbsp;R E A L L Y&nbsp;&nbsp;A M A Z I N G&nbsp;&nbsp;T Y P E F A C E</p>
+      <div class="splash-rule bottom"></div>
+    </div>
+  </div>
+
+  <!-- ░░░ Site ░░░ -->
+  <main id="site" class="site" aria-hidden="true">
+
+    <header class="masthead">
+      <div class="mast-left">
+        <div class="mast-title">Miss Eaves</div>
+        <div class="mast-tag">Really Amazing Font · No.&nbsp;1</div>
+      </div>
+      <nav class="mast-nav">
+        <a href="#specimen">Specimen</a>
+        <a href="#details">Details</a>
+        <a href="#try">Try&nbsp;it</a>
+        <a href="#get" class="nav-get">Get&nbsp;the&nbsp;font</a>
+      </nav>
+    </header>
+
+    <!-- The whole character set, on screen at once -->
+    <section id="specimen" class="specimen">
+      <div class="section-kicker"><span>Ⅰ</span> The Complete Character Set</div>
+      <div id="grid" class="grid" aria-label="Every glyph in Miss Eaves"></div>
+      <p class="specimen-note">Hover any glyph to bring it into the light.</p>
+    </section>
+
+    <!-- Details: ampersand, ligatures, figures -->
+    <section id="details" class="details">
+      <div class="section-kicker"><span>Ⅱ</span> Details Worth Noticing</div>
+      <div class="detail-grid">
+        <figure class="detail-card amp-card">
+          <div class="detail-glyph huge">&amp;</div>
+          <figcaption>
+            <h3>The Ampersand</h3>
+            <p>A roman <em>“et”</em> in the old manner — an upper eye, a full lower bowl, and a tail that will not sit still.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="detail-card">
+          <div class="detail-glyph liga">fi&nbsp;&nbsp;fl&nbsp;&nbsp;ff</div>
+          <figcaption>
+            <h3>True Ligatures</h3>
+            <p>The dot of the <em>i</em> and the arm of the <em>f</em> are quarrelsome. Real <span class="mono">liga</span> substitutions keep the peace.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="detail-card">
+          <div class="detail-glyph figs">1234567890</div>
+          <figcaption>
+            <h3>Old-Style Figures</h3>
+            <p>Numerals that rise and fall like lowercase — they belong <em>inside</em> a sentence, not shouting over it.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="detail-card contrast-card">
+          <div class="detail-glyph huge">O</div>
+          <figcaption>
+            <h3>High Contrast</h3>
+            <p>Thick on the flanks, a hairline over the crown. The eye reads the modulation as elegance.</p>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Type your own -->
+    <section id="try" class="try">
+      <div class="section-kicker"><span>Ⅲ</span> Set Your Own Words</div>
+      <div class="try-stage">
+        <div id="tryOut" class="try-out" contenteditable="false">Handsome</div>
+      </div>
+      <div class="try-controls">
+        <input id="tryInput" class="try-input" type="text" maxlength="28"
+               value="Handsome" aria-label="Type words to preview in Miss Eaves"
+               placeholder="Type something lovely…" autocomplete="off" spellcheck="false" />
+        <label class="size-label">
+          Size
+          <input id="trySize" type="range" min="60" max="220" value="130" aria-label="Preview size" />
+        </label>
+      </div>
+      <div class="try-suggest">
+        Try: <button data-word="Fifty">Fifty</button>
+        <button data-word="Baroque &amp; Bold">Baroque &amp; Bold</button>
+        <button data-word="Quiet luxury">Quiet luxury</button>
+        <button data-word="1892">1892</button>
+      </div>
+    </section>
+
+    <!-- Get the font -->
+    <section id="get" class="get">
+      <div class="get-inner">
+        <div class="get-kicker">The Reckoning</div>
+        <h2 class="get-head">Take Miss Eaves home.</h2>
+        <p class="get-copy">
+          The full TrueType file — every capital, every lowercase, the old-style
+          figures, the ampersand, and the ligatures. Yours to install and set
+          in anything you like.
+        </p>
+        <button id="downloadBtn" class="download-btn" type="button">
+          <span class="dl-glow"></span>
+          <span class="dl-label">Download TTF</span>
+        </button>
+        <p class="get-fineprint">One&nbsp;(1) TrueType file · <span class="price-note">$100</span> · installs everywhere</p>
+      </div>
+    </section>
+
+    <footer class="colophon">
+      <div class="col-line"></div>
+      <p>
+        <strong>Miss Eaves</strong> is an original typeface drawn from geometric first
+        principles — every curve, stem, and serif generated and compiled into a genuine
+        <span class="mono">.ttf</span>. Set entirely in itself.
+      </p>
+      <p class="col-fine">Really Amazing Font · MMXXVI</p>
+    </footer>
+
+  </main>
+
+  <!-- ░░░ Payment modal ░░░ -->
+  <div id="pay" class="pay" role="dialog" aria-modal="true" aria-labelledby="payTitle" hidden>
+    <div class="pay-backdrop" data-close></div>
+    <div class="pay-card" role="document">
+      <button class="pay-x" type="button" data-close aria-label="Close">×</button>
+
+      <!-- Step 1: checkout -->
+      <div class="pay-step" data-step="checkout">
+        <div class="pay-crest">M<span>·</span>E</div>
+        <h2 id="payTitle" class="pay-title">Send us one hundred dollars</h2>
+        <p class="pay-sub">Then, and only then, shall the typeface be released unto you.</p>
+
+        <div class="pay-amount">
+          <span class="amt-cur">$</span><span class="amt-num">100</span><span class="amt-dot">.00</span>
+        </div>
+
+        <form id="payForm" class="pay-form" novalidate>
+          <label class="fld">
+            <span>Name on card</span>
+            <input type="text" name="name" value="A. Generous Patron" autocomplete="off" spellcheck="false" />
+          </label>
+          <label class="fld">
+            <span>Card number</span>
+            <input type="text" name="card" inputmode="numeric" value="4242 4242 4242 4242" autocomplete="off" spellcheck="false" />
+          </label>
+          <div class="fld-row">
+            <label class="fld">
+              <span>Expiry</span>
+              <input type="text" name="exp" value="12 / 29" autocomplete="off" spellcheck="false" />
+            </label>
+            <label class="fld">
+              <span>CVC</span>
+              <input type="text" name="cvc" inputmode="numeric" value="100" autocomplete="off" spellcheck="false" />
+            </label>
+          </div>
+          <button type="submit" class="pay-submit">
+            <span class="pay-submit-label">Pay&nbsp;$100</span>
+          </button>
+        </form>
+        <p class="pay-legal">✦ Theatrical checkout. No card is read, no money moves, nothing is sent anywhere. It’s a bit. The font is free.</p>
+      </div>
+
+      <!-- Step 2: processing -->
+      <div class="pay-step" data-step="processing" hidden>
+        <div class="spinner" aria-hidden="true"></div>
+        <p class="proc-line">Counting your hundred dollars…</p>
+      </div>
+
+      <!-- Step 3: success -->
+      <div class="pay-step" data-step="success" hidden>
+        <div class="tick" aria-hidden="true">
+          <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24" fill="none"/><path fill="none" d="M14 27 l8 8 l16 -18"/></svg>
+        </div>
+        <h2 class="succ-title">Paid. You are a person of taste.</h2>
+        <p class="succ-sub">Your download should begin on its own. If it’s shy:</p>
+        <a id="fallbackDl" class="succ-dl" href="fonts/MissEaves.ttf" download="MissEaves.ttf">Download MissEaves.ttf</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
