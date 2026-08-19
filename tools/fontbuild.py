@@ -28,16 +28,16 @@ ASC  = 745          # ascender
 DESC = -220         # descender
 OS   = 11           # overshoot for round glyphs
 
-STEM  = 118         # thick vertical stem
-THIN  = 30          # thin horizontal / thin curve
-HAIR  = 24          # hairline
-SERH  = 22          # serif slab height
-SEXT  = 48          # serif extension each side of a stem
-DIAGT = 112         # thick diagonal
-DIAGH = 34          # thin diagonal
+STEM  = 112         # thick vertical stem
+THIN  = 46          # thin horizontal / thin curve (moderate, transitional)
+HAIR  = 40          # hairline
+SERH  = 26          # serif slab height
+SEXT  = 46          # serif extension each side of a stem
+DIAGT = 104         # thick diagonal
+DIAGH = 52          # thin diagonal
 
-CWMAX = 128         # max wall thickness of a capital bowl (thick sides)
-LWMAX = 104         # max wall thickness of a lowercase bowl
+CWMAX = 116         # max wall thickness of a capital bowl (thick sides)
+LWMAX = 100         # max wall thickness of a lowercase bowl
 
 # ----------------------------------------------------------------------------
 # Geometry helpers. Everything works in y-up font units. Solid (filled)
@@ -140,15 +140,40 @@ def cw(a0, a1, wmax, wmin=THIN):
         return wmin + (wmax - wmin) * abs(math.cos(a))
     return f
 
+def qbez(p0, p1, p2, n=10):
+    """Sample a quadratic Bézier from p0 to p2 with control p1."""
+    out = []
+    for i in range(n + 1):
+        t = i / n
+        u = 1 - t
+        out.append((u * u * p0[0] + 2 * u * t * p1[0] + t * t * p2[0],
+                    u * u * p0[1] + 2 * u * t * p1[1] + t * t * p2[1]))
+    return out
+
 def serif_slab(cx, y, w=STEM, ext=SEXT, h=SERH, up=True):
-    """A slab serif centred on a stem at height y."""
-    y0, y1 = (y, y + h) if up else (y - h, y)
-    return rect(cx - w / 2 - ext, cx + w / 2 + ext, y0, y1)
+    """
+    A bracketed serif: the horizontal slab plus two concave fillets that flow
+    the stem smoothly into the serif — the signature of a transitional face.
+    Returns a list of contours.
+    """
+    if up:
+        y0, y1, face, d = y, y + h, y + h, 1
+    else:
+        y0, y1, face, d = y - h, y, y - h, -1
+    slab = rect(cx - w / 2 - ext, cx + w / 2 + ext, y0, y1)
+    B = h + 22                     # how far the bracket climbs the stem
+    fx = ext * 0.66                # how far the bracket spreads along the serif
+    le, re = cx - w / 2, cx + w / 2
+    lP0, lP1, lP2 = (le, face + d * B), (le, face), (le - fx, face)
+    rP0, rP1, rP2 = (re, face + d * B), (re, face), (re + fx, face)
+    left  = solid([lP0, lP1, lP2] + qbez(lP2, lP1, lP0)[1:])
+    right = solid([rP0, rP1, rP2] + qbez(rP2, rP1, rP0)[1:])
+    return [slab, left, right]
 
 def stem_serifed(cx, y0, y1, w=STEM, top=True, bot=True, ext=SEXT):
     out = [vstem(cx, y0, y1, w)]
-    if bot: out.append(serif_slab(cx, y0, w, ext, SERH, up=True))
-    if top: out.append(serif_slab(cx, y1, w, ext, SERH, up=False))
+    if bot: out += serif_slab(cx, y0, w, ext, SERH, up=True)
+    if top: out += serif_slab(cx, y1, w, ext, SERH, up=False)
     return out
 
 def dot(cx, cy, r):
@@ -249,7 +274,7 @@ def _I():
 @glyph("J", 420)
 def _J():
     c = [vstem(300, 130, CAP, STEM)]
-    c.append(serif_slab(300, CAP, STEM, SEXT, SERH, up=False))
+    c += serif_slab(300, CAP, STEM, SEXT, SERH, up=False)
     c.append(curve(180, 150, 130, 150, 0, -math.pi, cw(0, -math.pi, CWMAX - 6), n=64))
     return c
 
@@ -271,14 +296,13 @@ def _L():
     c.append(rect(500, 560, 0, SERH + 30))
     return c
 
-@glyph("M", 860)
+@glyph("M", 880)
 def _M():
-    c = stem_serifed(150, 0, CAP, top=False)
-    c += stem_serifed(710, 0, CAP, top=False)
-    c.append(quad((150, CAP - 20), (430, 150), DIAGT))
-    c.append(quad((710, CAP - 20), (430, 150), DIAGT))
-    c.append(rect(96, 250, CAP - SERH, CAP))
-    c.append(rect(656, 810, CAP - SERH, CAP))
+    # Straight-sided M: two upright serifed stems, an inner V to the baseline.
+    c = stem_serifed(150, 0, CAP)
+    c += stem_serifed(730, 0, CAP)
+    c.append(quad((150, CAP - 40), (440, 120), DIAGT - 6))   # left inner diagonal
+    c.append(quad((730, CAP - 40), (440, 120), DIAGT - 6))   # right inner diagonal
     return c
 
 @glyph("N", 760)
@@ -320,16 +344,19 @@ def _R():
 
 @glyph("S", 600)
 def _S():
+    # Two point-symmetric arcs (thin terminals, thick spine) that meet on a
+    # diagonal through the centre.
     cx = 300
     r = math.radians
-    top = curve(cx, 462, 150, 158, r(25), r(252), lambda t: 40 + 84 * t, n=90)
-    bot = curve(cx, 238, 150, 158, r(72), r(-112), lambda t: 124 - 84 * t, n=90)
+    w = lambda t: 46 + 74 * t
+    top = curve(cx, 508, 150, 182, r(45), r(230), w, n=96)
+    bot = curve(cx, 192, 150, 182, r(225), r(410), w, n=96)
     return [top, bot]
 
 @glyph("T", 640)
 def _T():
     c = [vstem(320, 0, CAP - THIN, STEM)]
-    c.append(serif_slab(320, 0, STEM, SEXT, SERH, up=True))
+    c += serif_slab(320, 0, STEM, SEXT, SERH, up=True)
     c.append(hbar(70, 570, CAP - THIN / 2, THIN + 6))
     c.append(rect(70, 130, CAP - SERH - 24, CAP))
     c.append(rect(510, 570, CAP - SERH - 24, CAP))
@@ -339,8 +366,8 @@ def _T():
 def _U():
     c = [vstem(150, 170, CAP, STEM), vstem(590, 170, CAP, STEM)]
     c.append(curve(370, 190, 220, 190, math.pi, 2*math.pi, cw(math.pi, 2*math.pi, THIN+6, THIN), n=64))
-    c.append(serif_slab(150, CAP, STEM, SEXT, SERH, up=False))
-    c.append(serif_slab(590, CAP, STEM, SEXT, SERH, up=False))
+    c += serif_slab(150, CAP, STEM, SEXT, SERH, up=False)
+    c += serif_slab(590, CAP, STEM, SEXT, SERH, up=False)
     return c
 
 @glyph("V", 700)
@@ -371,7 +398,7 @@ def _X():
 def _Y():
     c = [quad((110, CAP), (350, 330), DIAGT), quad((590, CAP), (350, 330), DIAGH + 8)]
     c.append(vstem(350, 0, 360, STEM))
-    c.append(serif_slab(350, 0, STEM, SEXT, SERH, up=True))
+    c += serif_slab(350, 0, STEM, SEXT, SERH, up=True)
     c.append(rect(56, 200, CAP - SERH, CAP))
     c.append(rect(516, 636, CAP - SERH, CAP))
     return c
@@ -390,7 +417,7 @@ def _Z():
 @glyph("a", 500)
 def _a():
     c = [vstem(400, 0, XH - 30, STEM - 8)]
-    c.append(serif_slab(400, 0, STEM - 8, SEXT - 8, SERH, up=True))
+    c += serif_slab(400, 0, STEM - 8, SEXT - 8, SERH, up=True)
     c.append(ring(238, 150, 168, 150, LWMAX - 20, THIN, n=64)[0])
     c.append(ring(238, 150, 168, 150, LWMAX - 20, THIN, n=64)[1])
     c.append(curve(250, XH - 175, 180, 130, 0.15*math.pi, 0.95*math.pi,
@@ -430,7 +457,7 @@ def _f():
     c = [vstem(230, 0, ASC - 60, STEM - 22)]
     c.append(curve(300, ASC - 55, 90, 90, 0, 0.62*math.pi, lambda t: THIN + 26, n=40))
     c.append(hbar(70, 400, XH - THIN / 2 - 6, THIN + 8))
-    c.append(serif_slab(230, 0, STEM - 22, SEXT - 10, SERH, up=True))
+    c += serif_slab(230, 0, STEM - 22, SEXT - 10, SERH, up=True)
     return c
 
 @glyph("g", 520)
@@ -522,8 +549,9 @@ def _r():
 def _s():
     cx = 210
     r = math.radians
-    top = curve(cx, XH * 0.70, 118, 124, r(25), r(252), lambda t: 32 + 66 * t, n=72)
-    bot = curve(cx, XH * 0.30, 118, 124, r(72), r(-112), lambda t: 98 - 66 * t, n=72)
+    w = lambda t: 34 + 56 * t
+    top = curve(cx, 280, 106, 150, r(45), r(230), w, n=80)
+    bot = curve(cx, 144, 106, 150, r(225), r(410), w, n=80)
     return [top, bot]
 
 @glyph("t", 320)
@@ -578,7 +606,7 @@ def _0():
 def _1():
     c = [vstem(210, 0, XH + 120, STEM - 20)]
     c.append(quad((110, XH + 40), (210, XH + 120), THIN + 20))
-    c.append(serif_slab(210, 0, STEM - 20, SEXT, SERH, up=True))
+    c += serif_slab(210, 0, STEM - 20, SEXT, SERH, up=True)
     return c
 
 @glyph("two", 480)
@@ -717,7 +745,7 @@ def _fi():
     c = [vstem(230, 0, ASC - 60, STEM - 22)]
     c.append(curve(300, ASC - 55, 100, 90, 0, 0.62*math.pi, lambda t: THIN + 26, n=40))
     c.append(hbar(70, 500, XH - THIN/2 - 6, THIN + 8))
-    c.append(serif_slab(230, 0, STEM - 22, SEXT - 10, SERH, up=True))
+    c += serif_slab(230, 0, STEM - 22, SEXT - 10, SERH, up=True)
     c += stem_serifed(430, 0, XH, STEM - 20, top=False, bot=True)
     c += dot(430, ASC - 55, 52)
     return c
@@ -727,7 +755,7 @@ def _fl():
     c = [vstem(230, 0, ASC - 60, STEM - 22)]
     c.append(curve(300, ASC - 55, 100, 90, 0, 0.62*math.pi, lambda t: THIN + 26, n=40))
     c.append(hbar(70, 470, XH - THIN/2 - 6, THIN + 8))
-    c.append(serif_slab(230, 0, STEM - 22, SEXT - 10, SERH, up=True))
+    c += serif_slab(230, 0, STEM - 22, SEXT - 10, SERH, up=True)
     c += stem_serifed(430, 0, ASC, STEM - 20, top=True, bot=True)
     return c
 
@@ -736,11 +764,11 @@ def _ff():
     c = [vstem(220, 0, ASC - 60, STEM - 26)]
     c.append(curve(290, ASC - 55, 90, 90, 0, 0.62*math.pi, lambda t: THIN + 24, n=40))
     c.append(hbar(60, 380, XH - THIN/2 - 6, THIN + 8))
-    c.append(serif_slab(220, 0, STEM - 26, SEXT - 12, SERH, up=True))
+    c += serif_slab(220, 0, STEM - 26, SEXT - 12, SERH, up=True)
     c.append(vstem(430, 0, ASC - 60, STEM - 26))
     c.append(curve(500, ASC - 55, 90, 90, 0, 0.62*math.pi, lambda t: THIN + 24, n=40))
     c.append(hbar(270, 590, XH - THIN/2 - 6, THIN + 8))
-    c.append(serif_slab(430, 0, STEM - 26, SEXT - 12, SERH, up=True))
+    c += serif_slab(430, 0, STEM - 26, SEXT - 12, SERH, up=True)
     return c
 
 # ----------------------------------------------------------------------------

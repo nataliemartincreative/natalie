@@ -24,7 +24,8 @@
   --gold:    #c39140;
   --gold-hi: #e7bd6a;
   --gold-dk: #9a6f27;
-  --oxblood: #7a2f2a;
+  --oxblood: #ce4232;   /* warm vermilion — the Mrs Eaves red */
+  --red-dk:  #a8331f;
 
   --ui: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
   --display: "Miss Eaves", "Iowan Old Style", Georgia, serif;
@@ -74,11 +75,12 @@ body::before{
 .splash-word{
   font-family:var(--display);
   font-weight:400;
-  font-size:clamp(64px, 15vw, 190px);
+  font-size:clamp(58px, 14vw, 176px);
   line-height:.98;
   margin:.28em 0 .16em;
-  color:var(--ink);
-  letter-spacing:.01em;
+  color:var(--oxblood);
+  text-transform:uppercase;
+  letter-spacing:.12em;
 }
 .splash-word span{
   display:inline-block;
@@ -122,7 +124,7 @@ body::before{
   background:color-mix(in srgb, var(--paper) 86%, transparent);
   backdrop-filter:blur(8px);
 }
-.mast-title{ font-family:var(--display); font-size:30px; line-height:1; }
+.mast-title{ font-family:var(--display); font-size:27px; line-height:1; color:var(--oxblood); text-transform:uppercase; letter-spacing:.14em; }
 .mast-tag{ font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted-2); margin-top:6px; }
 .mast-nav{ display:flex; gap:clamp(12px,2vw,30px); align-items:center; }
 .mast-nav a{
@@ -171,7 +173,7 @@ section{ padding:clamp(48px,7vw,110px) var(--pad); position:relative; }
   font-family:var(--display);
   font-size:clamp(38px,4.4vw,64px);
   line-height:1;
-  color:var(--ink);
+  color:var(--oxblood);
   transform:translateY(6px) scale(.6);
   opacity:0;
   transition:transform .3s cubic-bezier(.2,.9,.2,1);
@@ -199,7 +201,7 @@ section{ padding:clamp(48px,7vw,110px) var(--pad); position:relative; }
   z-index:5;
   box-shadow:0 22px 50px -18px rgba(40,30,15,.5);
 }
-.grid .cell:hover .glyph{ color:var(--oxblood); transform:none; }
+.grid .cell:hover .glyph{ color:var(--red-dk); transform:none; }
 .grid .cell:hover .tag{ opacity:1; transform:none; }
 .grid .cell::after{ /* warm glow behind hovered glyph */
   content:""; position:absolute; inset:0; opacity:0;
@@ -225,12 +227,12 @@ section{ padding:clamp(48px,7vw,110px) var(--pad); position:relative; }
   display:flex; flex-direction:column; gap:22px; min-height:340px;
 }
 .detail-glyph{
-  font-family:var(--display); color:var(--ink); line-height:.9;
+  font-family:var(--display); color:var(--oxblood); line-height:.9;
   flex:1; display:grid; place-items:center;
 }
 .detail-glyph.huge{ font-size:clamp(150px,20vw,240px); }
-.detail-glyph.liga{ font-size:clamp(64px,9vw,104px); letter-spacing:.02em; }
-.detail-glyph.figs{ font-size:clamp(48px,6.5vw,82px); letter-spacing:.04em; color:var(--ink-2); }
+.detail-glyph.liga{ font-size:clamp(64px,9vw,104px); letter-spacing:.02em; color:var(--ink); }
+.detail-glyph.figs{ font-size:clamp(48px,6.5vw,82px); letter-spacing:.04em; }
 .amp-card .detail-glyph{ color:var(--oxblood); }
 .contrast-card{ background:var(--ink); color:var(--paper); }
 .contrast-card .detail-glyph{ color:var(--paper); }
@@ -259,7 +261,7 @@ em{ font-style:italic; color:var(--oxblood); }
 }
 .try-out{
   font-family:var(--display);
-  font-size:130px; line-height:1.02; color:var(--ink);
+  font-size:130px; line-height:1.02; color:var(--oxblood);
   word-break:break-word; max-width:100%;
   transition:font-size .18s ease;
 }
