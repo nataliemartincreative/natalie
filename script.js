@@ -1,153 +1,183 @@
 /* ============================================================
-   Miss Eaves — interactions
+   Natalie Martin — Graphic Design Portfolio
+   Edit the PROJECTS array below to swap in real work.
    ============================================================ */
 (function () {
   "use strict";
 
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---- Glyph set for the specimen grid ------------------- */
-  const UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-  const LOWER = "abcdefghijklmnopqrstuvwxyz".split("");
-  const DIGIT = "0123456789".split("");
-  const PUNCT = [".", ",", ":", ";", "!", "?", "'", "\"", "-", "(", ")", "&", "/"];
-  const GLYPHS = [...UPPER, ...LOWER, ...DIGIT, ...PUNCT];
-
-  const codeTag = (ch) =>
-    "U+" + ch.codePointAt(0).toString(16).toUpperCase().padStart(4, "0");
-
-  /* ---- Build the grid ------------------------------------ */
-  const grid = document.getElementById("grid");
-  const cells = [];
-  GLYPHS.forEach((ch) => {
-    const cell = document.createElement("div");
-    cell.className = "cell";
-    const g = document.createElement("span");
-    g.className = "glyph";
-    g.textContent = ch;
-    const t = document.createElement("span");
-    t.className = "tag";
-    t.textContent = codeTag(ch);
-    cell.appendChild(g);
-    cell.appendChild(t);
-    grid.appendChild(cell);
-    cells.push(cell);
-  });
-
-  /* ---- Typewriter cascade -------------------------------- */
-  function cascade() {
-    if (reduce) {
-      cells.forEach((c) => c.classList.add("in"));
-      return;
+  const PROJECTS = [
+    {
+      title: "Ember & Oak",
+      category: "Brand Identity",
+      year: "2025",
+      img: "img/work-01.svg",
+      blurb: "A warm, tactile identity system for a small-batch ceramics studio — wordmark, packaging marks, and a set of stamped textures."
+    },
+    {
+      title: "Northbound Quarterly",
+      category: "Editorial Design",
+      year: "2024",
+      img: "img/work-02.svg",
+      blurb: "Layout and art direction for a quarterly print journal — grid system, pull quotes, and a flexible type hierarchy."
+    },
+    {
+      title: "Meridian Skincare",
+      category: "Packaging",
+      year: "2024",
+      img: "img/work-03.svg",
+      blurb: "Packaging suite for a minimal skincare line — label system, carton structure, and shelf presence."
+    },
+    {
+      title: "Static / Noise Festival",
+      category: "Poster & Print",
+      year: "2023",
+      img: "img/work-04.svg",
+      blurb: "A poster series for an experimental music festival — bold color pairings built on a modular grid."
+    },
+    {
+      title: "Fieldnote",
+      category: "Web & Digital",
+      year: "2023",
+      img: "img/work-05.svg",
+      blurb: "Visual direction and UI for a journaling app — component system, iconography, and marketing site."
+    },
+    {
+      title: "Paper Menagerie",
+      category: "Illustration",
+      year: "2022",
+      img: "img/work-06.svg",
+      blurb: "An illustrated pattern collection inspired by folded paper forms, licensed for textiles and stationery."
     }
-    cells.forEach((c, i) => {
-      setTimeout(() => c.classList.add("in"), i * 34);
-    });
-  }
+  ];
 
-  /* ---- Splash → site sequence ---------------------------- */
-  const splash = document.getElementById("splash");
-  const site = document.getElementById("site");
-  document.body.classList.add("locked");
-
-  function revealSite() {
-    splash.classList.add("done");
-    site.classList.add("reveal");
-    site.setAttribute("aria-hidden", "false");
-    document.body.classList.remove("locked");
-    cascade();
-  }
-
-  // Fonts ready + splash beat, then reveal.
-  const holdMs = reduce ? 200 : 2400;
-  const start = performance.now();
-  const ready = document.fonts ? document.fonts.ready : Promise.resolve();
-  ready.then(() => {
-    const elapsed = performance.now() - start;
-    setTimeout(revealSite, Math.max(0, holdMs - elapsed));
+  /* ---- Hero "flicker" viewer ------------------------------ */
+  const viewer = document.getElementById("heroViewer");
+  PROJECTS.forEach((p, i) => {
+    const img = document.createElement("img");
+    img.src = p.img;
+    img.alt = p.title + " — " + p.category;
+    img.loading = i === 0 ? "eager" : "lazy";
+    if (i === 0) img.classList.add("is-active");
+    viewer.appendChild(img);
   });
-  // Safety net if fonts.ready never resolves.
-  setTimeout(() => { if (!site.classList.contains("reveal")) revealSite(); }, 4200);
-  // Let the impatient skip.
-  splash.addEventListener("click", () => { if (!site.classList.contains("reveal")) revealSite(); });
-
-  /* ---- Type-your-own ------------------------------------- */
-  const tryInput = document.getElementById("tryInput");
-  const tryOut = document.getElementById("tryOut");
-  const trySize = document.getElementById("trySize");
-
-  function renderTry() {
-    const v = tryInput.value.trim();
-    tryOut.textContent = v.length ? v : " ";
+  const heroImgs = Array.from(viewer.querySelectorAll("img"));
+  let heroIndex = 0;
+  function tickHero() {
+    heroImgs[heroIndex].classList.remove("is-active");
+    heroIndex = (heroIndex + 1) % heroImgs.length;
+    heroImgs[heroIndex].classList.add("is-active");
   }
-  function sizeTry() {
-    tryOut.style.fontSize = trySize.value + "px";
+  if (heroImgs.length > 1) {
+    setInterval(tickHero, reduce ? 3200 : 1100);
   }
-  tryInput.addEventListener("input", renderTry);
-  trySize.addEventListener("input", sizeTry);
-  sizeTry();
 
-  document.querySelectorAll(".try-suggest button").forEach((b) => {
-    b.addEventListener("click", () => {
-      tryInput.value = b.getAttribute("data-word");
-      renderTry();
-      tryInput.focus();
-    });
+  /* ---- Work grid ------------------------------------------ */
+  const grid = document.getElementById("workGrid");
+  PROJECTS.forEach((p, i) => {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "work-card";
+    card.dataset.index = i;
+    card.innerHTML =
+      '<div class="work-thumb"><img src="' + p.img + '" alt="" loading="lazy" /></div>' +
+      '<div class="work-meta">' +
+        '<p class="work-cat">' + p.category + '</p>' +
+        '<h3 class="work-title">' + p.title + '</h3>' +
+        '<p class="work-year">' + p.year + '</p>' +
+      '</div>';
+    card.addEventListener("click", () => openModal(i));
+    grid.appendChild(card);
   });
 
-  /* ---- Payment modal ------------------------------------- */
-  const pay = document.getElementById("pay");
-  const openBtn = document.getElementById("downloadBtn");
-  const form = document.getElementById("payForm");
-  const steps = {};
-  pay.querySelectorAll(".pay-step").forEach((s) => (steps[s.dataset.step] = s));
+  /* ---- Reveal-on-scroll for work cards ---------------------- */
+  const cards = Array.from(grid.querySelectorAll(".work-card"));
+  if ("IntersectionObserver" in window && !reduce) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    cards.forEach((c) => io.observe(c));
+  } else {
+    cards.forEach((c) => c.classList.add("in-view"));
+  }
 
+  /* ---- Modal ------------------------------------------------ */
+  const modal = document.getElementById("modal");
+  const modalImg = document.getElementById("modalImg");
+  const modalCategory = document.getElementById("modalCategory");
+  const modalYear = document.getElementById("modalYear");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalBlurb = document.getElementById("modalBlurb");
+  const prevBtn = modal.querySelector(".modal-prev");
+  const nextBtn = modal.querySelector(".modal-next");
+
+  let current = 0;
   let lastFocus = null;
 
-  function showStep(name) {
-    Object.values(steps).forEach((s) => (s.hidden = true));
-    steps[name].hidden = false;
+  function renderModal() {
+    const p = PROJECTS[current];
+    modalImg.src = p.img;
+    modalImg.alt = p.title + " — " + p.category;
+    modalCategory.textContent = p.category;
+    modalYear.textContent = p.year;
+    modalTitle.textContent = p.title;
+    modalBlurb.textContent = p.blurb;
   }
 
-  function openPay() {
+  function openModal(i) {
+    current = i;
     lastFocus = document.activeElement;
-    showStep("checkout");
-    pay.hidden = false;
+    renderModal();
+    modal.hidden = false;
     document.body.classList.add("locked");
-    const first = form.querySelector("input");
-    if (first) setTimeout(() => first.focus(), 60);
   }
 
-  function closePay() {
-    pay.hidden = true;
+  function closeModal() {
+    modal.hidden = true;
     document.body.classList.remove("locked");
     if (lastFocus) lastFocus.focus();
   }
 
-  function triggerDownload() {
-    const a = document.createElement("a");
-    a.href = "fonts/MissEaves.ttf";
-    a.download = "MissEaves.ttf";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+  function step(delta) {
+    current = (current + delta + PROJECTS.length) % PROJECTS.length;
+    renderModal();
   }
 
-  openBtn.addEventListener("click", openPay);
-  pay.querySelectorAll("[data-close]").forEach((el) =>
-    el.addEventListener("click", closePay)
+  modal.querySelectorAll("[data-close]").forEach((el) =>
+    el.addEventListener("click", closeModal)
   );
+  prevBtn.addEventListener("click", () => step(-1));
+  nextBtn.addEventListener("click", () => step(1));
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !pay.hidden) closePay();
+    if (modal.hidden) return;
+    if (e.key === "Escape") closeModal();
+    if (e.key === "ArrowLeft") step(-1);
+    if (e.key === "ArrowRight") step(1);
   });
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    showStep("processing");
-    const wait = reduce ? 300 : 1700;
-    setTimeout(() => {
-      showStep("success");
-      triggerDownload();
-    }, wait);
+  /* ---- Mobile nav toggle ------------------------------------ */
+  const navToggle = document.getElementById("navToggle");
+  const mastNav = document.getElementById("mastNav");
+  navToggle.addEventListener("click", () => {
+    const open = mastNav.classList.toggle("open");
+    navToggle.setAttribute("aria-expanded", String(open));
   });
+  mastNav.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => {
+      mastNav.classList.remove("open");
+      navToggle.setAttribute("aria-expanded", "false");
+    })
+  );
+
+  /* ---- Footer year ------------------------------------------ */
+  document.getElementById("year").textContent = new Date().getFullYear();
 })();

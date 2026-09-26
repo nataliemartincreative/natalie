@@ -1,44 +1,37 @@
-# Miss Eaves — Really Amazing Font
+# Natalie Martin — Graphic Design Portfolio
 
-A single-page type-specimen website for **Miss Eaves**, an original high-contrast
-display typeface drawn from geometric first principles and compiled into a genuine,
-installable TrueType file.
-
-> Miss Eaves is an original design made for this project. It is *not* Emigre's
-> commercial "Mrs Eaves" — the name is a playful homage; every glyph here was
-> generated from scratch.
+A single-page portfolio site: a hero that cycles through project previews,
+a work grid, an about section, and a contact section. Static, no build step.
 
 ## What's here
 
 | Path | Purpose |
 |------|---------|
-| `index.html` · `styles.css` · `script.js` | The website (static, no build step) |
-| `fonts/MissEaves.ttf` | The typeface — real TrueType, installable & downloadable |
-| `fonts/MissEaves.woff2` | Web-optimised copy used by the page |
-| `tools/fontbuild.py` | Generates the typeface from geometric primitives → `.ttf` |
-| `tools/specimen.py` | Renders a specimen PNG for visual QA |
-| `assets/specimen.png` | Reference specimen of the full character set |
+| `index.html` · `styles.css` · `script.js` | The website |
+| `img/work-01.svg` … `img/work-06.svg` | Placeholder project artwork (swap for real work) |
+| `img/profile.svg` | Placeholder portrait for the About section |
+| `favicon.svg` | Browser tab icon |
 
-## The website
+## Replace with your own content
 
-- **Splash** — the wordmark reveals letter by letter, then dissolves.
-- **Specimen** — the *entire* character set (A–Z, a–z, 0–9, punctuation) on screen
-  at once, snapping into place with a typewriter cascade. Hover any glyph to
-  spotlight it.
-- **Details** — the ampersand, true `liga` ligatures, old-style figures, and the
-  stroke contrast, each in its own card.
-- **Set your own words** — type anything and watch it render live, with a size slider.
-- **Get the font** — a rounded, glowing *Download TTF* button. Clicking it opens a
-  **theatrical** "send us $100" checkout. No card is read, no money moves, nothing
-  is sent anywhere — it's a bit. On "payment" the real `.ttf` downloads.
+Everything content-related lives in one place: the `PROJECTS` array at the
+top of `script.js`. Each entry has a `title`, `category`, `year`, `img`
+(path to the project image), and `blurb` (short description). Edit the
+array and drop your own images into `img/` (any aspect ratio close to 4:3
+works best) — the hero preview and the work grid both render from it
+automatically.
 
-## Rebuilding the typeface
+Other things to personalize:
 
-```bash
-pip install fonttools brotli pillow
-python3 tools/fontbuild.py fonts/MissEaves.ttf
-python3 tools/specimen.py fonts/MissEaves.ttf assets/specimen.png
-```
+- **About section** (`index.html`) — bio copy, focus areas, and tools list.
+- **Contact section** (`index.html`) — the email is already set to
+  `natalie.martin.creative@gmail.com`; the Instagram / Behance / LinkedIn
+  links are placeholders (`href="#"`) — point them at your real profiles.
+- **`img/profile.svg`** — replace with an actual photo (e.g. `img/profile.jpg`
+  and update the `<img>` tag in the About section).
+- **Case study text** — the project modal currently shows the same `blurb`
+  as the grid card plus a placeholder note; expand `modalBlurb` handling in
+  `script.js` if you want longer, per-project case studies.
 
 ## Running the site
 
