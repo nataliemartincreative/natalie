@@ -125,7 +125,7 @@ export function BrandResearch({ name, onDone }: { name: string; onDone?: () => v
             type="button"
             disabled={busy || !chosen}
             onClick={() => chosen && choose(chosen)}
-            className="rounded-lg bg-ink px-3.5 py-2 text-sm font-semibold text-sun hover:bg-ink/85 disabled:opacity-60"
+            className="tap rounded-lg bg-ink px-3.5 py-2 text-sm font-semibold text-sun hover:bg-ink/85 disabled:opacity-60"
           >
             {reading ? "Reading their site…" : "Use this brand"}
           </button>
@@ -134,7 +134,7 @@ export function BrandResearch({ name, onDone }: { name: string; onDone?: () => v
           type="button"
           disabled={busy}
           onClick={search}
-          className="rounded-lg border border-ink/20 px-3.5 py-2 text-sm font-semibold hover:bg-ink/5 disabled:opacity-60"
+          className="tap rounded-lg border border-ink/20 px-3.5 py-2 text-sm font-semibold hover:bg-ink/5 disabled:opacity-60"
         >
           {candidates ? "Search again" : "Search the web"}
         </button>
@@ -155,7 +155,7 @@ export function BrandResearch({ name, onDone }: { name: string; onDone?: () => v
         <button
           type="submit"
           disabled={busy}
-          className="rounded-lg border border-ink/20 px-3.5 py-2 text-sm font-semibold hover:bg-ink/5 disabled:opacity-60"
+          className="tap rounded-lg border border-ink/20 px-3.5 py-2 text-sm font-semibold hover:bg-ink/5 disabled:opacity-60"
         >
           Use website
         </button>

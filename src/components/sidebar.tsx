@@ -14,11 +14,11 @@ const icons: Record<NavIcon, typeof HomeIcon> = {
 
 export function Sidebar() {
   return (
-    <aside className="flex shrink-0 items-center gap-2 border-b border-ink/15 bg-sun-deep px-4 py-3 md:h-dvh md:w-64 md:flex-col md:transition-[width] md:duration-200 collapsed:w-[4.5rem] md:items-stretch md:border-r md:border-b-0 md:px-3 md:py-5">
+    <aside className="sticky top-0 z-30 flex shrink-0 items-center gap-1 border-b border-ink/15 bg-sun-deep px-3 pt-[max(0.5rem,env(safe-area-inset-top))] pb-2 sm:gap-2 sm:px-4 md:static md:h-dvh md:pt-5 md:w-64 md:flex-col md:transition-[width] md:duration-200 collapsed:w-[4.5rem] md:items-stretch md:border-r md:border-b-0 md:px-3 md:py-5">
       <Link
         href="/"
         aria-label={`${site.name} — home`}
-        className="rounded-md px-2 text-2xl font-bold tracking-[-0.06em] md:mb-8 md:text-[2rem] collapsed:px-0 collapsed:text-center collapsed:text-base"
+        className="flex min-h-11 items-center rounded-md px-2 text-2xl font-bold tracking-[-0.06em] md:mb-8 md:block md:min-h-0 md:text-[2rem] collapsed:px-0 collapsed:text-center collapsed:text-base"
       >
         {site.initials}
       </Link>

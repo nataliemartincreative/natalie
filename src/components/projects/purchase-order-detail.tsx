@@ -33,7 +33,7 @@ export function PurchaseOrderDetail() {
     <div className="mx-auto max-w-[100rem] px-6 py-8 md:px-10 md:py-10">
       <title>{`${po.name} · ${site.initials}`}</title>
       <nav aria-label="Breadcrumb" className="mb-6 text-sm text-ink-soft">
-        <Link href="/purchase-orders" className="hover:underline">
+        <Link href="/purchase-orders" className="-my-2 inline-block py-2 hover:underline">
           Purchase orders
         </Link>
         <span aria-hidden> / </span>

@@ -81,7 +81,7 @@ export function DielineCard({ project }: { project: Project }) {
             <a
               href={url}
               download={dieline.fileName}
-              className="rounded-lg border border-ink/20 px-3 py-1.5 text-sm font-semibold hover:bg-ink/5"
+              className="tap inline-flex items-center rounded-lg border border-ink/20 px-3 py-1.5 text-sm font-semibold hover:bg-ink/5"
             >
               Download
             </a>
@@ -90,7 +90,7 @@ export function DielineCard({ project }: { project: Project }) {
             type="button"
             disabled={pending}
             onClick={() => inputRef.current?.click()}
-            className="rounded-lg bg-ink px-3 py-1.5 text-sm font-semibold text-sun hover:bg-ink/85 disabled:opacity-60"
+            className="tap rounded-lg bg-ink px-3 py-1.5 text-sm font-semibold text-sun hover:bg-ink/85 disabled:opacity-60"
           >
             {pending ? "Saving…" : dieline ? "Replace" : "Upload dieline"}
           </button>
@@ -98,7 +98,7 @@ export function DielineCard({ project }: { project: Project }) {
             <button
               type="button"
               onClick={remove}
-              className="rounded-lg px-3 py-1.5 text-sm font-semibold text-red-800 hover:bg-red-700/10"
+              className="tap rounded-lg px-3 py-1.5 text-sm font-semibold text-red-800 hover:bg-red-700/10"
             >
               Remove
             </button>
@@ -130,7 +130,7 @@ export function DielineCard({ project }: { project: Project }) {
               // eslint-disable-next-line @next/next/no-img-element -- local file preview
               <img src={url} alt={`Dieline ${dieline.fileName}`} className="h-auto w-full" />
             ) : (
-              <object data={url} type="application/pdf" aria-label="Dieline preview" className="h-[28rem] w-full">
+              <object data={url} type="application/pdf" aria-label="Dieline preview" className="h-[22rem] md:h-[28rem] w-full">
                 <p className="p-4 text-sm text-ink-soft">
                   Preview isn&apos;t available for this file. Use Download to open it.
                 </p>

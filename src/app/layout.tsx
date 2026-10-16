@@ -12,6 +12,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#ffd60a",
+  // Lets the yellow top bar run under the notch; padding uses safe-area insets.
+  viewportFit: "cover",
 };
 
 // Runs before first paint so returning visitors never see a flash: the intro

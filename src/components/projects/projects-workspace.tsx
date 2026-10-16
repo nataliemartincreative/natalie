@@ -112,7 +112,7 @@ export function ProjectsWorkspace() {
             type="button"
             disabled={importing}
             onClick={() => fileInputRef.current?.click()}
-            className="rounded-lg bg-ink px-3.5 py-2 text-sm font-semibold text-sun hover:bg-ink/85 disabled:opacity-60"
+            className="tap rounded-lg bg-ink px-3.5 py-2 text-sm font-semibold text-sun hover:bg-ink/85 disabled:opacity-60"
           >
             {importing ? "Importing…" : "Import"}
           </button>
@@ -195,7 +195,7 @@ function NoticeBanner({ notice, onDismiss }: { notice: Notice; onDismiss: () => 
         type="button"
         onClick={onDismiss}
         aria-label="Dismiss"
-        className="-m-1 rounded p-1 leading-none hover:bg-ink/10"
+        className="-m-1 rounded p-1 leading-none hover:bg-ink/10 pointer-coarse:-m-3 pointer-coarse:p-3"
       >
         ✕
       </button>
@@ -208,9 +208,10 @@ function EmptyState({ onImport }: { onImport: () => void }) {
     <div className="grid place-items-center gap-3 rounded-2xl border-2 border-dashed border-ink/25 px-6 py-20 text-center">
       <p className="text-2xl font-bold tracking-tight">No projects yet</p>
       <p className="max-w-sm text-sm text-ink-soft">
-        Drag a spreadsheet anywhere on this page, or{" "}
+        <span className="pointer-coarse:hidden">Drag a spreadsheet anywhere on this page, or </span>
         <button type="button" onClick={onImport} className="font-semibold underline underline-offset-4">
-          import a file
+          <span className="pointer-coarse:hidden">import a file</span>
+          <span className="hidden pointer-coarse:inline">Import a spreadsheet</span>
         </button>
         . Each row becomes a project.
       </p>

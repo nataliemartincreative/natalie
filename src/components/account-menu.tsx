@@ -75,7 +75,7 @@ export function AccountMenu() {
               role="menuitem"
               tabIndex={-1}
               onClick={() => setOpen(false)}
-              className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium text-ink-soft outline-none hover:bg-ink/5 hover:text-ink focus-visible:bg-ink focus-visible:text-sun"
+              className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm pointer-coarse:py-3 font-medium text-ink-soft outline-none hover:bg-ink/5 hover:text-ink focus-visible:bg-ink focus-visible:text-sun"
             >
               <ItemIcon width={18} height={18} />
               {label}

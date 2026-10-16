@@ -69,6 +69,30 @@
   color-scheme: dark;
 }
 
+/* Inverse pages paint the whole content area, even when content is short. */
+main:has(> .theme-inverse) {
+  background: #0b0b0b;
+}
+
+/* Primary actions get a 44px touch target on phones. */
+@utility tap {
+  @media (width < 48rem) {
+    min-height: 2.75rem;
+  }
+}
+
+/*
+ * iOS zooms the page when a focused field's text is under 16px. Unlayered so
+ * it wins over text-sm utilities; phones only, desktop keeps the denser size.
+ */
+@media (width < 48rem) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

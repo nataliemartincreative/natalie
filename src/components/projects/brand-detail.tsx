@@ -25,7 +25,7 @@ export function BrandDetail() {
     <div className="mx-auto max-w-[100rem] px-6 py-8 md:px-10 md:py-10">
       {name && <title>{`${name} · ${site.initials}`}</title>}
       <nav aria-label="Breadcrumb" className="mb-6 text-sm text-ink-soft">
-        <Link href="/projects" className="hover:underline">
+        <Link href="/projects" className="-my-2 inline-block py-2 hover:underline">
           Projects
         </Link>
         <span aria-hidden> / </span>
@@ -51,7 +51,7 @@ export function BrandDetail() {
               <button
                 type="button"
                 onClick={() => setEditing(true)}
-                className="rounded-lg border border-ink/20 px-3.5 py-2 text-sm font-semibold hover:bg-ink/5"
+                className="tap rounded-lg border border-ink/20 px-3.5 py-2 text-sm font-semibold hover:bg-ink/5"
               >
                 Change brand match
               </button>

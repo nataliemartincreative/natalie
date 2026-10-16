@@ -47,7 +47,7 @@ export function NewBrandsDialog({ brands, onClose }: { brands: string[]; onClose
                 updateBrand(name, { status: "skipped" });
                 next();
               }}
-              className="rounded-lg px-3.5 py-2 text-sm font-semibold hover:bg-ink/5"
+              className="tap rounded-lg px-3.5 py-2 text-sm font-semibold hover:bg-ink/5"
             >
               {index + 1 < brands.length ? "Skip for now" : "Skip and finish"}
             </button>

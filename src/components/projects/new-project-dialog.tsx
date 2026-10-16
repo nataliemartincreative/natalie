@@ -50,7 +50,7 @@ export function NewProjectDialog({ brands }: { brands: readonly string[] }) {
       <button
         type="button"
         onClick={() => dialogRef.current?.showModal()}
-        className="rounded-lg border border-ink/20 px-3.5 py-2 text-sm font-semibold hover:bg-ink/5"
+        className="tap rounded-lg border border-ink/20 px-3.5 py-2 text-sm font-semibold hover:bg-ink/5"
       >
         New project
       </button>
@@ -118,13 +118,13 @@ export function NewProjectDialog({ brands }: { brands: readonly string[] }) {
             <button
               type="button"
               onClick={close}
-              className="rounded-lg px-3.5 py-2 text-sm font-semibold hover:bg-ink/5"
+              className="tap rounded-lg px-3.5 py-2 text-sm font-semibold hover:bg-ink/5"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="rounded-lg bg-ink px-3.5 py-2 text-sm font-semibold text-sun hover:bg-ink/85"
+              className="tap rounded-lg bg-ink px-3.5 py-2 text-sm font-semibold text-sun hover:bg-ink/85"
             >
               Add project
             </button>

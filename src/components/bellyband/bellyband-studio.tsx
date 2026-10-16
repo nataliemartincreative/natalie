@@ -85,14 +85,14 @@ export function BellyBandStudio() {
       <p className="text-xs font-semibold tracking-[0.25em] text-ink-soft uppercase">Oasis · Acacia cutting board</p>
       <h1 className="mt-2 text-4xl font-bold tracking-[-0.04em] md:text-6xl">Belly Band</h1>
 
-      <ol className="mt-6 flex flex-wrap gap-2 text-xs font-semibold">
+      <ol className="-mx-6 mt-6 flex snap-x scroll-px-6 gap-2 overflow-x-auto px-6 pb-1 text-xs font-semibold [scrollbar-width:none] md:mx-0 md:flex-wrap md:overflow-visible md:px-0">
         {STEPS.map((step, i) => {
           const active = i === 0 ? !chosen : false;
           const done = i === 0 && !!chosen;
           return (
             <li
               key={step}
-              className={`rounded-full border px-3 py-1.5 ${
+              className={`shrink-0 snap-start rounded-full border px-3 py-1.5 whitespace-nowrap ${
                 active ? "border-ink bg-ink text-sun" : done ? "border-ink/30 bg-white/60" : "border-ink/15 text-ink-soft"
               }`}
             >
@@ -119,7 +119,7 @@ export function BellyBandStudio() {
                   href={state.canvasUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg border border-ink/20 px-3.5 py-2 text-sm font-semibold hover:bg-ink/5"
+                  className="tap inline-flex items-center rounded-lg border border-ink/20 px-3.5 py-2 text-sm font-semibold hover:bg-ink/5"
                 >
                   Open in Flora ↗
                 </a>
@@ -128,7 +128,7 @@ export function BellyBandStudio() {
                 type="button"
                 disabled={starting || pending.length > 0}
                 onClick={() => confirm("Generate five new renders? This uses Flora credits again.") && start()}
-                className="rounded-lg border border-ink/20 px-3.5 py-2 text-sm font-semibold hover:bg-ink/5 disabled:opacity-60"
+                className="tap rounded-lg border border-ink/20 px-3.5 py-2 text-sm font-semibold hover:bg-ink/5 disabled:opacity-60"
               >
                 Regenerate all
               </button>
@@ -245,7 +245,7 @@ function RenderCard({ render, status, chosen }: { render: StartedRender; status?
           disabled={!ready}
           onClick={() => updateBellyBand(() => ({ chosenRunId: render.runId }))}
           aria-pressed={chosen}
-          className="rounded-lg border border-ink/20 px-3 py-1.5 text-sm font-semibold hover:bg-ink/5 disabled:opacity-50 aria-pressed:bg-ink aria-pressed:text-sun"
+          className="tap rounded-lg border border-ink/20 px-3 py-1.5 text-sm font-semibold hover:bg-ink/5 disabled:opacity-50 aria-pressed:bg-ink aria-pressed:text-sun"
         >
           {chosen ? "✓ Base board" : "Use this board"}
         </button>

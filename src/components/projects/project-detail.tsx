@@ -64,13 +64,13 @@ export function ProjectDetail() {
       <title>{`${project.styleNumber ? `${project.styleNumber} · ` : ""}${project.name} · ${site.initials}`}</title>
 
       <nav aria-label="Breadcrumb" className="mb-6 text-sm text-ink-soft">
-        <Link href="/projects" className="hover:underline">
+        <Link href="/projects" className="-my-2 inline-block py-2 hover:underline">
           Projects
         </Link>
         {po && (
           <>
             <span aria-hidden> / </span>
-            <Link href={`/purchase-orders/${po.id}`} className="hover:underline">
+            <Link href={`/purchase-orders/${po.id}`} className="-my-2 inline-block py-2 hover:underline">
               {po.name}
             </Link>
           </>
@@ -83,7 +83,7 @@ export function ProjectDetail() {
         <div className="min-w-0">
           <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold tracking-[0.25em] text-ink-soft uppercase">
             {project.brand && (
-              <Link href={`/brands/${brandSlug(project.brand)}`} className="hover:text-ink hover:underline">
+              <Link href={`/brands/${brandSlug(project.brand)}`} className="-my-2 py-2 hover:text-ink hover:underline">
                 {project.brand}
               </Link>
             )}
@@ -110,7 +110,7 @@ export function ProjectDetail() {
               />
               <a
                 href={`/api/barcode?code=${upc.code}&download=1`}
-                className="mt-4 inline-block rounded-lg bg-ink px-3.5 py-2 text-sm font-semibold text-sun hover:bg-ink/85"
+                className="tap mt-4 inline-flex items-center rounded-lg bg-ink px-3.5 py-2 text-sm font-semibold text-sun hover:bg-ink/85"
               >
                 Download SVG
               </a>
@@ -147,7 +147,7 @@ export function ProjectDetail() {
           deleteProject(project.id);
           router.push("/projects");
         }}
-        className="mt-10 rounded-lg px-3 py-2 text-sm font-semibold text-red-800 hover:bg-red-700/10"
+        className="tap mt-10 rounded-lg px-3 py-2 text-sm font-semibold text-red-800 hover:bg-red-700/10"
       >
         Delete project
       </button>
@@ -210,7 +210,7 @@ function DetailList({ title, entries }: { title: string; entries: [string, strin
       {entries.length ? (
         <dl className="mt-3 divide-y divide-ink/10">
           {entries.map(([key, value]) => (
-            <div key={key} className="grid grid-cols-[minmax(0,14rem)_1fr] gap-4 py-2 text-sm">
+            <div key={key} className="grid gap-0.5 py-2 text-sm sm:grid-cols-[minmax(0,14rem)_1fr] sm:gap-4">
               <dt className="text-ink-soft">{key}</dt>
               <dd className="break-words">{value}</dd>
             </div>

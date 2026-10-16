@@ -31,7 +31,14 @@ export function ProjectsTable({
   const extraColumns = detailColumns(projects);
 
   return (
-    <div className="overflow-auto rounded-xl border border-ink/15 bg-sun-pale/60 [max-height:calc(100dvh-14rem)]">
+    <>
+      <ProjectCards
+        projects={projects}
+        poName={poName}
+        showBrand={showBrand}
+        showPurchaseOrder={showPurchaseOrder}
+      />
+      <div className="hidden overflow-auto rounded-xl border border-ink/15 bg-sun-pale/60 [max-height:calc(100dvh-14rem)] md:block">
       <table className="min-w-full border-separate border-spacing-0 text-sm">
         <thead>
           <tr>
@@ -139,7 +146,83 @@ export function ProjectsTable({
           ))}
         </tbody>
       </table>
-    </div>
+      </div>
+    </>
+  );
+}
+
+/** Phones: one card per project with the key fields; tap the name to open it. */
+function ProjectCards({
+  projects,
+  poName,
+  showBrand,
+  showPurchaseOrder,
+}: {
+  projects: readonly Project[];
+  poName: Map<string, string>;
+  showBrand: boolean;
+  showPurchaseOrder: boolean;
+}) {
+  return (
+    <ul className="grid gap-3 md:hidden">
+      {projects.map((p) => {
+        const sizeIn = formatDims(p.dimensions.in, "in");
+        const sizeCm = formatDims(p.dimensions.cm, "cm");
+        const po = p.purchaseOrderId && poName.get(p.purchaseOrderId);
+        return (
+          <li key={p.id} className="rounded-xl border border-ink/15 bg-sun-pale/60 p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                {p.styleNumber && <p className="font-mono text-xs text-ink-soft">#{p.styleNumber}</p>}
+                <Link
+                  href={`/projects/${p.id}`}
+                  className="-my-1.5 block py-1.5 text-base leading-snug font-semibold underline-offset-4 hover:underline"
+                >
+                  {p.name}
+                </Link>
+                {showBrand && p.brand && (
+                  <Link
+                    href={`/brands/${brandSlug(p.brand)}`}
+                    className="-my-2 inline-block py-2 text-sm text-ink-soft underline-offset-4 hover:underline"
+                  >
+                    {p.brand}
+                  </Link>
+                )}
+              </div>
+              <StatusSelect id={p.id} status={p.status} />
+            </div>
+            <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+              <div className="col-span-2">
+                <dt className="text-xs text-ink-soft">UPC-A</dt>
+                <dd className="font-mono text-sm tabular-nums">
+                  <BarcodeCell value={p.barcode} />
+                </dd>
+              </div>
+              {(sizeIn || sizeCm) && (
+                <div className="col-span-2">
+                  <dt className="text-xs text-ink-soft">Size</dt>
+                  <dd className="tabular-nums">{[sizeIn, sizeCm].filter(Boolean).join(" · ")}</dd>
+                </div>
+              )}
+              <div>
+                <dt className="text-xs text-ink-soft">Dieline</dt>
+                <dd>{p.dieline ? "✓ Uploaded" : empty}</dd>
+              </div>
+              {showPurchaseOrder && po && (
+                <div className="min-w-0">
+                  <dt className="text-xs text-ink-soft">Purchase order</dt>
+                  <dd className="truncate">
+                    <Link href={`/purchase-orders/${p.purchaseOrderId}`} className="py-2 underline-offset-4 hover:underline">
+                      {po}
+                    </Link>
+                  </dd>
+                </div>
+              )}
+            </dl>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 
