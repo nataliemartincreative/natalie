@@ -24,6 +24,11 @@
   animation: splash-curtain 0.9s var(--ease-in-out) 4.7s forwards;
 }
 
+/* Set before first paint once the intro has played this session. */
+html[data-intro="done"] .splash {
+  display: none;
+}
+
 /* Film grain + vignette */
 .splash-grain {
   position: absolute;

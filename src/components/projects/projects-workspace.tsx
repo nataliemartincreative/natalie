@@ -2,13 +2,24 @@
 
 import { useEffect, useEffectEvent, useRef, useState, useTransition } from "react";
 import { IMPORT_ACCEPT, importProjects, type ImportResult } from "@/lib/import-projects";
-import { addProjects, useProjects } from "@/lib/projects";
+import { upsertProjects, useProjects, type ImportOutcome } from "@/lib/projects";
+import Link from "next/link";
 import { NewProjectDialog } from "./new-project-dialog";
 import { ProjectsTable } from "./projects-table";
 
 type Notice =
-  | { kind: "imported"; result: ImportResult }
+  | { kind: "imported"; result: ImportResult; outcome: ImportOutcome }
   | { kind: "error"; message: string };
+
+const FIELD_LABELS: Record<string, string> = {
+  styleNumber: "Style #",
+  name: "Name",
+  shortDescription: "Short description",
+  brand: "Brand",
+  barcode: "Barcode",
+  status: "Status",
+  dimensions: "Dimensions",
+};
 
 const isSpreadsheet = (file: File) =>
   IMPORT_ACCEPT.split(",").some((ext) => file.name.toLowerCase().endsWith(ext));
@@ -28,8 +39,8 @@ export function ProjectsWorkspace() {
     startImport(async () => {
       try {
         const result = await importProjects(file);
-        addProjects(result.projects);
-        setNotice({ kind: "imported", result });
+        const outcome = upsertProjects(result.projects, result.purchaseOrder);
+        setNotice({ kind: "imported", result, outcome });
       } catch (err) {
         const message = err instanceof Error ? err.message : "Unknown error.";
         setNotice({ kind: "error", message: `Couldn't import ${file.name}: ${message}` });
@@ -149,13 +160,26 @@ function NoticeBanner({ notice, onDismiss }: { notice: Notice; onDismiss: () => 
       ) : (
         <div>
           <p className="font-semibold">
-            Imported {notice.result.projects.length} projects from {notice.result.fileName}
+            Imported {notice.result.fileName}: {notice.outcome.created} new,{" "}
+            {notice.outcome.updated} updated
+            {notice.outcome.purchaseOrder && (
+              <>
+                {" "}
+                into{" "}
+                <Link
+                  href={`/purchase-orders/${notice.outcome.purchaseOrder.id}`}
+                  className="underline underline-offset-4"
+                >
+                  {notice.outcome.purchaseOrder.name}
+                </Link>
+              </>
+            )}
           </p>
           <p className="mt-0.5 text-ink-soft">
             {Object.entries(notice.result.mapping)
-              .map(([field, header]) => `${field[0].toUpperCase()}${field.slice(1)} ← “${header}”`)
+              .map(([field, header]) => `${FIELD_LABELS[field] ?? field} ← “${header}”`)
               .join(" · ") || "No name, brand or barcode columns found"}
-            . Other columns were saved as project details.
+            . Other columns were kept as project details.
           </p>
         </div>
       )}

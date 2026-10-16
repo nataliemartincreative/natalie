@@ -2,9 +2,13 @@ import Link from "next/link";
 import { navItems, site, type NavIcon } from "@/lib/site";
 import { AccountMenu } from "./account-menu";
 import { NavLink } from "./nav-link";
-import { HomeIcon, ProjectsIcon } from "./icons";
+import { HomeIcon, ProjectsIcon, ReceiptIcon } from "./icons";
 
-const icons: Record<NavIcon, typeof HomeIcon> = { home: HomeIcon, projects: ProjectsIcon };
+const icons: Record<NavIcon, typeof HomeIcon> = {
+  home: HomeIcon,
+  projects: ProjectsIcon,
+  purchaseOrders: ReceiptIcon,
+};
 
 export function Sidebar() {
   return (
@@ -17,7 +21,7 @@ export function Sidebar() {
         {site.initials}
       </Link>
 
-      <nav aria-label="Main" className="flex-1">
+      <nav aria-label="Main" className="min-w-0 flex-1">
         <ul className="flex gap-1 md:flex-col">
           {navItems.map(({ href, label, icon, match }) => {
             const ItemIcon = icons[icon];

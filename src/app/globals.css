@@ -35,11 +35,6 @@
     color: var(--color-sun);
   }
 
-  /* Set before first paint once the intro has played this session. */
-  html[data-intro="done"] [data-splash] {
-    display: none;
-  }
-
   :focus-visible {
     outline: 2px solid var(--color-ink);
     outline-offset: 2px;

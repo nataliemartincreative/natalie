@@ -41,7 +41,8 @@ function NavLinkView({ href, icon, children, active }: NavLinkProps & { active: 
       className="group flex items-center gap-3 rounded-lg px-3 py-2 text-[15px] font-medium text-ink-soft transition-colors hover:bg-ink/5 hover:text-ink aria-[current=page]:bg-ink aria-[current=page]:text-sun"
     >
       {icon}
-      <span>{children}</span>
+      {/* Icons only in the narrow mobile top bar. */}
+      <span className="max-md:sr-only">{children}</span>
     </Link>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useRef, useState, type FormEvent } from "react";
-import { addProjects, STATUSES, type Project, type Status } from "@/lib/projects";
+import { STATUSES, upsertProjects, type Status } from "@/lib/projects";
 import { parseUpcA } from "@/lib/upc";
 
 const input =
@@ -29,14 +29,17 @@ export function NewProjectDialog({ brands }: { brands: readonly string[] }) {
       barcode = result.code;
     }
 
-    addProjects([
+    upsertProjects([
       {
+        styleNumber: field("styleNumber"),
         name: field("name"),
+        shortDescription: "",
         brand: field("brand"),
         status: field("status") as Status,
         barcode,
-        metadata: {},
-      } satisfies Omit<Project, "id" | "createdAt">,
+        dimensions: {},
+        details: {},
+      },
     ]);
     e.currentTarget.reset();
     close();
@@ -63,10 +66,16 @@ export function NewProjectDialog({ brands }: { brands: readonly string[] }) {
             New project
           </h2>
 
-          <label className="grid gap-1.5 text-sm font-medium">
-            Name
-            <input name="name" required autoFocus className={input} />
-          </label>
+          <div className="grid grid-cols-[8rem_1fr] gap-3">
+            <label className="grid gap-1.5 text-sm font-medium">
+              Style #
+              <input name="styleNumber" className={`${input} font-mono`} />
+            </label>
+            <label className="grid gap-1.5 text-sm font-medium">
+              Name
+              <input name="name" required autoFocus className={input} />
+            </label>
+          </div>
 
           <label className="grid gap-1.5 text-sm font-medium">
             Brand
