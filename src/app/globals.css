@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sun: #ffd60a;
+  --color-sun-deep: #f5c400;
+  --color-sun-pale: #ffe766;
+  --color-ink: #0b0b0b;
+  --color-ink-soft: #3a3200;
+
+  --font-sans: "Helvetica Neue", Helvetica, Arial, "Nimbus Sans", sans-serif;
+
+  --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background: var(--color-sun);
+    color: var(--color-ink);
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-sun);
+  }
+
+  /* Set before first paint once the intro has played this session. */
+  html[data-intro="done"] [data-splash] {
+    display: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

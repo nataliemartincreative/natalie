@@ -1,0 +1,38 @@
+import Link from "next/link";
+import { navItems, site, type NavIcon } from "@/lib/site";
+import { AccountMenu } from "./account-menu";
+import { NavLink } from "./nav-link";
+import { HomeIcon, ProjectsIcon } from "./icons";
+
+const icons: Record<NavIcon, typeof HomeIcon> = { home: HomeIcon, projects: ProjectsIcon };
+
+export function Sidebar() {
+  return (
+    <aside className="flex shrink-0 items-center gap-2 border-b border-ink/15 bg-sun-deep px-4 py-3 md:h-dvh md:w-64 md:flex-col md:items-stretch md:border-r md:border-b-0 md:px-3 md:py-5">
+      <Link
+        href="/"
+        aria-label={`${site.name} — home`}
+        className="rounded-md px-2 text-2xl font-bold tracking-[-0.06em] md:mb-8 md:text-[2rem]"
+      >
+        {site.initials}
+      </Link>
+
+      <nav aria-label="Main" className="flex-1">
+        <ul className="flex gap-1 md:flex-col">
+          {navItems.map(({ href, label, icon, match }) => {
+            const ItemIcon = icons[icon];
+            return (
+              <li key={href}>
+                <NavLink href={href} match={match} icon={<ItemIcon />}>
+                  {label}
+                </NavLink>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      <AccountMenu />
+    </aside>
+  );
+}
