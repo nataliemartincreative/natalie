@@ -83,7 +83,7 @@ export function ProjectsTable({
               <td className={`${td} font-mono text-xs tabular-nums`}>{p.styleNumber || empty}</td>
               <th
                 scope="row"
-                className={`${td} left-0 bg-sun-pale text-left font-semibold group-hover:bg-[#fff0a0] md:sticky`}
+                className={`${td} left-0 bg-sun-pale text-left font-semibold group-hover:bg-sun-hover md:sticky`}
               >
                 <Link
                   href={`/projects/${p.id}`}

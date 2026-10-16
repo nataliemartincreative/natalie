@@ -14,8 +14,8 @@ const hostname = (url: string) => {
 };
 
 const CONFIDENCE: Record<BrandCandidate["confidence"], string> = {
-  high: "bg-emerald-700 text-white",
-  medium: "bg-orange-500 text-white",
+  high: "bg-emerald-700 text-[#fff]",
+  medium: "bg-orange-500 text-[#fff]",
   low: "bg-ink/15 text-ink",
 };
 

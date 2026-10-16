@@ -59,7 +59,7 @@ export function NewProjectDialog({ brands }: { brands: readonly string[] }) {
         ref={dialogRef}
         onClose={() => setBarcodeError(undefined)}
         aria-labelledby={`${brandListId}-title`}
-        className="m-auto w-[min(28rem,calc(100vw-2rem))] rounded-2xl border border-ink/15 bg-sun-pale p-0 text-ink shadow-2xl backdrop:bg-ink/40 backdrop:backdrop-blur-sm open:animate-rise"
+        className="m-auto w-[min(28rem,calc(100vw-2rem))] rounded-2xl border border-ink/15 bg-sun-pale p-0 text-ink shadow-2xl backdrop:bg-black/50 backdrop:backdrop-blur-sm open:animate-rise"
       >
         <form onSubmit={onSubmit} className="grid gap-4 p-6">
           <h2 id={`${brandListId}-title`} className="text-xl font-bold tracking-tight">

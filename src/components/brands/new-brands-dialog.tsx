@@ -27,7 +27,7 @@ export function NewBrandsDialog({ brands, onClose }: { brands: string[]; onClose
       ref={dialogRef}
       onClose={onClose}
       aria-labelledby="new-brand-title"
-      className="m-auto w-[min(40rem,calc(100vw-2rem))] rounded-2xl border border-ink/15 bg-sun-pale p-0 text-ink shadow-2xl backdrop:bg-ink/40 backdrop:backdrop-blur-sm open:animate-rise"
+      className="m-auto w-[min(40rem,calc(100vw-2rem))] rounded-2xl border border-ink/15 bg-sun-pale p-0 text-ink shadow-2xl backdrop:bg-black/50 backdrop:backdrop-blur-sm open:animate-rise"
     >
       {name && (
         <div className="grid max-h-[85dvh] gap-4 overflow-y-auto p-6">

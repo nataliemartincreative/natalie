@@ -13,6 +13,7 @@
   --color-sun: #ffd60a;
   --color-sun-deep: #f5c400;
   --color-sun-pale: #ffe766;
+  --color-sun-hover: #fff0a0;
   --color-ink: #0b0b0b;
   --color-ink-soft: #3a3200;
 
@@ -48,6 +49,24 @@
     outline: 2px solid var(--color-ink);
     outline-offset: 2px;
   }
+}
+
+/*
+ * Inverse theme: black ground, yellow ink. Swaps the color tokens for a
+ * subtree, so every utility inside (and any dialog it opens) follows.
+ * White surfaces become dark ones so pills and inputs stay legible.
+ */
+.theme-inverse {
+  --color-sun: #0b0b0b;
+  --color-sun-deep: #161616;
+  --color-sun-pale: #1c1c1c;
+  --color-sun-hover: #262626;
+  --color-ink: #ffd60a;
+  --color-ink-soft: #cdb04a;
+  --color-white: #141414;
+  background: var(--color-sun);
+  color: var(--color-ink);
+  color-scheme: dark;
 }
 
 @media (prefers-reduced-motion: reduce) {
