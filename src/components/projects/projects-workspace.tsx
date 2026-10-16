@@ -4,6 +4,8 @@ import { useEffect, useEffectEvent, useRef, useState, useTransition } from "reac
 import { IMPORT_ACCEPT, importProjects, type ImportResult } from "@/lib/import-projects";
 import { upsertProjects, useProjects, type ImportOutcome } from "@/lib/projects";
 import Link from "next/link";
+import { NewBrandsDialog } from "@/components/brands/new-brands-dialog";
+import { searchBrand } from "@/lib/brand-actions";
 import { NewProjectDialog } from "./new-project-dialog";
 import { ProjectsTable } from "./projects-table";
 
@@ -28,6 +30,7 @@ export function ProjectsWorkspace() {
   const projects = useProjects();
   const [notice, setNotice] = useState<Notice>();
   const [dragging, setDragging] = useState(false);
+  const [newBrands, setNewBrands] = useState<string[]>([]);
   const [importing, startImport] = useTransition();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -41,6 +44,9 @@ export function ProjectsWorkspace() {
         const result = await importProjects(file);
         const outcome = upsertProjects(result.projects, result.purchaseOrder);
         setNotice({ kind: "imported", result, outcome });
+        // Research every new brand in parallel while the user reviews the first.
+        for (const brand of outcome.newBrands) void searchBrand(brand.name, result.projects);
+        setNewBrands(outcome.newBrands.map((b) => b.name));
       } catch (err) {
         const message = err instanceof Error ? err.message : "Unknown error.";
         setNotice({ kind: "error", message: `Couldn't import ${file.name}: ${message}` });
@@ -133,6 +139,8 @@ export function ProjectsWorkspace() {
       ) : (
         <ProjectsTable projects={projects} />
       )}
+
+      {newBrands.length > 0 && <NewBrandsDialog brands={newBrands} onClose={() => setNewBrands([])} />}
 
       {dragging && (
         <div className="pointer-events-none fixed inset-0 z-40 grid place-items-center bg-ink/80 p-6 backdrop-blur-sm">

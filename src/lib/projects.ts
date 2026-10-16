@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from "react";
+import type { BrandCandidate, BrandElements } from "./brand-types";
 
 export const STATUSES = ["Not started", "In progress", "Done"] as const;
 export type Status = (typeof STATUSES)[number];
@@ -43,6 +44,20 @@ export interface Project {
   details: Record<string, string>;
   dieline?: DielineFile;
   createdAt: string;
+  updatedAt: string;
+}
+
+export interface Brand {
+  slug: string;
+  name: string;
+  /** new: just seen on an import; confirmed: website chosen; skipped: not researched. */
+  status: "new" | "confirmed" | "skipped";
+  candidates?: BrandCandidate[];
+  /** A web search for candidates is running. */
+  researching?: boolean;
+  researchError?: string;
+  website?: string;
+  elements?: BrandElements;
   updatedAt: string;
 }
 
@@ -93,10 +108,11 @@ export const formatDims = (d: Dims | undefined, unit: string) =>
 interface State {
   projects: Project[];
   purchaseOrders: PurchaseOrder[];
+  brands: Brand[];
 }
 
 const STORAGE_KEY = "nfwe:data:v2";
-const EMPTY: State = { projects: [], purchaseOrders: [] };
+const EMPTY: State = { projects: [], purchaseOrders: [], brands: [] };
 const listeners = new Set<() => void>();
 let cache: State | undefined;
 
@@ -142,6 +158,7 @@ function useStore(): State | null {
 /** All projects, newest first. */
 export const useProjects = () => useStore()?.projects ?? null;
 export const usePurchaseOrders = () => useStore()?.purchaseOrders ?? null;
+export const useBrands = () => useStore()?.brands ?? null;
 
 function uniqueId(base: string, taken: Set<string>): string {
   let id = slugify(base, "project");
@@ -153,6 +170,8 @@ export interface ImportOutcome {
   purchaseOrder?: PurchaseOrder;
   created: number;
   updated: number;
+  /** Brands seen for the first time, which should be researched. */
+  newBrands: Brand[];
 }
 
 /**
@@ -207,8 +226,17 @@ export function upsertProjects(
     }
   }
 
-  save({ projects: [...fresh, ...projects], purchaseOrders });
-  return { purchaseOrder: po, created, updated };
+  const known = new Set(state.brands.map((b) => b.slug));
+  const newBrands: Brand[] = [];
+  for (const { brand } of inputs) {
+    const slug = brandSlug(brand);
+    if (!brand || known.has(slug)) continue;
+    known.add(slug);
+    newBrands.push({ slug, name: brand, status: "new", updatedAt: now });
+  }
+
+  save({ projects: [...fresh, ...projects], purchaseOrders, brands: [...state.brands, ...newBrands] });
+  return { purchaseOrder: po, created, updated, newBrands };
 }
 
 export function updateProject(id: string, patch: Partial<Omit<Project, "id">>) {
@@ -219,6 +247,33 @@ export function updateProject(id: string, patch: Partial<Omit<Project, "id">>) {
       p.id === id ? { ...p, ...patch, updatedAt: new Date().toISOString() } : p,
     ),
   });
+}
+
+/** Creates the brand record if needed, then applies the patch. */
+export function updateBrand(name: string, patch: Partial<Omit<Brand, "slug">>) {
+  const state = load();
+  const slug = brandSlug(name);
+  const now = new Date().toISOString();
+  const exists = state.brands.some((b) => b.slug === slug);
+  const brands = exists
+    ? state.brands.map((b) => (b.slug === slug ? { ...b, ...patch, updatedAt: now } : b))
+    : [...state.brands, { slug, name, status: "new" as const, ...patch, updatedAt: now }];
+  save({ ...state, brands });
+}
+
+/** Context for brand research: what this brand's products are. */
+export type HintSource = Pick<Project, "brand" | "name" | "details">;
+
+export function brandHints(projects: readonly HintSource[], brand: string): string[] {
+  const mine = projects.filter((p) => p.brand === brand);
+  const pick = (re: RegExp) =>
+    [...new Set(mine.flatMap((p) => Object.entries(p.details).filter(([k]) => re.test(k)).map(([, v]) => v)))];
+  const hints = [
+    ...pick(/^categor|sub-?categor/i).slice(0, 4).map((c) => `Category: ${c.replace(/_/g, " ").toLowerCase()}`),
+    ...mine.slice(0, 5).map((p) => `Product: ${p.name}`),
+    ...pick(/material/i).slice(0, 2).map((m) => `Material: ${m}`),
+  ];
+  return hints;
 }
 
 export function deleteProject(id: string) {

@@ -11,24 +11,41 @@ Tailwind CSS 4, TypeScript). A cinematic intro plays once per browser session.
   XLS/XLSX/CSV file onto the page. Each row becomes a project.
 - **Project**: `/projects/[id]`. Status, UPC-A barcode (with SVG download) and
   every imported column as details.
-- **Brand**: `/brands/[slug]`. All projects for one brand.
+- **Brand**: `/brands/[slug]`. The brand's logo, colors and fonts (read from
+  its website) and all of its projects.
+- **Purchase orders**: `/purchase-orders`. One per imported factory sheet; the
+  sheet's header block (factory, quote date, PO #…) becomes the purchase order.
+
+### New brands
+
+When an import introduces a brand the app hasn't seen, it searches the web for
+every brand using that name (Claude with web search, `/api/brands/research`)
+and asks you to pick the right one, or paste its website. The chosen site is
+read for its logo, colors and fonts (`/api/brands/elements`). Research needs
+`ANTHROPIC_API_KEY`; pasting a website works without it.
 
 ### How imports map columns
 
-The first sheet is read in the browser; the first row is the header. Columns
-are matched by header name:
+The first sheet is read in the browser. Plain tables (header in the first row)
+and vendor forms (a header block, then a one- or two-row table header, then
+products and a totals row) both work. Values are kept exactly as Excel shows
+them. The style number is the project's ID, so re-importing an updated sheet
+updates projects instead of duplicating them. Columns are matched by header:
 
 | Field   | Headers it looks for                                    |
 | ------- | ------------------------------------------------------- |
-| Brand   | Label Brand, Brand Name, Brand, Label                   |
-| Name    | Product Name, Project Name, Item Name, Name, Title, ... |
+| Style # | Style Number, Style, SKU, Item Number, Model            |
+| Brand   | Label Brand, Brand Name, Brand                          |
+| Name    | Description (long), Product Name, Name, Title, ...      |
 | Barcode | UPC-A, UPC, UPC Code, Barcode, GTIN, EAN                |
 | Status  | Status, Stage                                           |
 
+Unit size L/W/H columns in cm and inches become the project's dimensions.
 Every other column is saved on the project as a detail. Barcodes that Excel
 stored as numbers get their leading zeros restored.
 
-Projects are stored in the browser (localStorage) for now. See
+Projects, purchase orders and brands are stored in the browser (localStorage,
+with dieline files in IndexedDB) for now. See
 `src/lib/projects.ts` to move them to a database.
 
 ## Barcode API
