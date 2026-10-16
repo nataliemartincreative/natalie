@@ -7,7 +7,7 @@ import {
   type AnimationEvent,
   type CSSProperties,
 } from "react";
-import { INTRO_STORAGE_KEY } from "@/lib/intro";
+import { INTRO_STORAGE_KEY } from "@/lib/storage-keys";
 import { site } from "@/lib/site";
 import "./splash-screen.css";
 

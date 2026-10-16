@@ -26,6 +26,11 @@ export interface DielineFile {
   type: string;
   size: number;
   uploadedAt: string;
+  /** The sheet this was cut from, when split from a combined dielines PDF. */
+  sourceFile?: string;
+  /** Panel widths left to right, as labelled on the dieline. */
+  panelWidthsCm?: number[];
+  heightCm?: number | null;
 }
 
 export interface Project {

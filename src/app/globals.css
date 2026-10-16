@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Desktop sidebar collapsed (set on <html> before first paint). */
+@custom-variant collapsed {
+  @media (width >= 48rem) {
+    &:where([data-sidebar="collapsed"] *) {
+      @slot;
+    }
+  }
+}
+
 @theme {
   --color-sun: #ffd60a;
   --color-sun-deep: #f5c400;

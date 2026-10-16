@@ -37,12 +37,13 @@ function NavLinkView({ href, icon, children, active }: NavLinkProps & { active: 
   return (
     <Link
       href={href}
+      title={typeof children === "string" ? children : undefined}
       aria-current={active ? "page" : undefined}
-      className="group flex items-center gap-3 rounded-lg px-3 py-2 text-[15px] font-medium text-ink-soft transition-colors hover:bg-ink/5 hover:text-ink aria-[current=page]:bg-ink aria-[current=page]:text-sun"
+      className="group flex shrink-0 items-center gap-3 rounded-lg px-3 py-2 text-[15px] font-medium text-ink-soft transition-colors hover:bg-ink/5 hover:text-ink aria-[current=page]:bg-ink aria-[current=page]:text-sun"
     >
       {icon}
       {/* Icons only in the narrow mobile top bar. */}
-      <span className="max-md:sr-only">{children}</span>
+      <span className="max-md:sr-only collapsed:sr-only">{children}</span>
     </Link>
   );
 }

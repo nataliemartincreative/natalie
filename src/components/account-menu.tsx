@@ -61,7 +61,7 @@ export function AccountMenu() {
           aria-label="Account"
           onKeyDown={onMenuKeyDown}
           ref={(el) => el?.querySelector<HTMLElement>('[role="menuitem"]')?.focus()}
-          className="absolute right-0 top-full z-20 mt-2 w-60 origin-top-right animate-rise rounded-xl border border-ink/10 bg-sun-pale p-1.5 shadow-[0_18px_40px_-12px_rgb(60_45_0/0.45)] md:left-0 md:right-auto md:top-auto md:bottom-full md:mt-0 md:mb-2 md:w-full md:origin-bottom-left"
+          className="absolute right-0 top-full z-20 mt-2 w-60 origin-top-right animate-rise rounded-xl border border-ink/10 bg-sun-pale p-1.5 shadow-[0_18px_40px_-12px_rgb(60_45_0/0.45)] md:left-0 md:right-auto md:top-auto md:bottom-full md:mt-0 md:mb-2 md:w-60 md:origin-bottom-left"
         >
           <div className="px-3 pt-2 pb-2.5">
             <p className="text-sm font-semibold">{site.user.name}</p>
@@ -96,12 +96,12 @@ export function AccountMenu() {
         <span className="grid size-9 shrink-0 place-items-center rounded-full bg-ink text-sm font-bold text-sun">
           {site.user.initial}
         </span>
-        <span className="hidden min-w-0 flex-1 md:block">
+        <span className="hidden min-w-0 flex-1 md:block collapsed:hidden">
           <span className="block truncate text-sm font-semibold">{site.user.name}</span>
           <span className="block truncate text-xs text-ink-soft">Account</span>
         </span>
-        <ChevronUpDownIcon width={16} height={16} className="hidden text-ink-soft md:block" />
-        <span className="sr-only md:hidden">Open account menu</span>
+        <ChevronUpDownIcon width={16} height={16} className="hidden text-ink-soft md:block collapsed:hidden" />
+        <span className="sr-only">Open account menu</span>
       </button>
     </div>
   );
