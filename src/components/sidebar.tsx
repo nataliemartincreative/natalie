@@ -3,12 +3,13 @@ import { navItems, site, type NavIcon } from "@/lib/site";
 import { AccountMenu } from "./account-menu";
 import { NavLink } from "./nav-link";
 import { SidebarToggle } from "./sidebar-toggle";
-import { HomeIcon, ProjectsIcon, ReceiptIcon } from "./icons";
+import { BandIcon, HomeIcon, ProjectsIcon, ReceiptIcon } from "./icons";
 
 const icons: Record<NavIcon, typeof HomeIcon> = {
   home: HomeIcon,
   projects: ProjectsIcon,
   purchaseOrders: ReceiptIcon,
+  bellyband: BandIcon,
 };
 
 export function Sidebar() {

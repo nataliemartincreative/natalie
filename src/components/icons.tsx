@@ -56,6 +56,15 @@ export function SidebarIcon(props: IconProps) {
   );
 }
 
+export function BandIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <rect x="3" y="6" width="18" height="12" rx="2" />
+      <path d="M10 6v12M14 6v12" />
+    </Icon>
+  );
+}
+
 export function UserIcon(props: IconProps) {
   return (
     <Icon {...props}>

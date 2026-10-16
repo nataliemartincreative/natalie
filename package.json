@@ -11,6 +11,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "0.135.0",
     "@e965/xlsx": "0.20.3",
+    "@flora-ai/flora": "0.21.1",
     "bwip-js": "^4.11.4",
     "next": "16.4.2",
     "pdf-lib": "1.17.1",
