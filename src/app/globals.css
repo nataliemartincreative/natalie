@@ -1,32 +1,17 @@
 @import "tailwindcss";
 
-/* Desktop sidebar collapsed (set on <html> before first paint). */
-@custom-variant collapsed {
-  @media (width >= 48rem) {
-    &:where([data-sidebar="collapsed"] *) {
-      @slot;
-    }
-  }
+@theme {
+  /* Warm paper and ink, with a soft line color for rules and borders. */
+  --color-paper: #f5f1ea;
+  --color-paper-deep: #ebe5da;
+  --color-ink: #1d1b18;
+  --color-ink-soft: #6a6358;
+  --color-line: #dbd3c6;
 }
 
-@theme {
-  --color-sun: #ffd60a;
-  --color-sun-deep: #f5c400;
-  --color-sun-pale: #ffe766;
-  --color-sun-hover: #fff0a0;
-  --color-ink: #0b0b0b;
-  --color-ink-soft: #3a3200;
-
-  --font-sans: "Helvetica Neue", Helvetica, Arial, "Nimbus Sans", sans-serif;
-
-  --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-  }
+@theme inline {
+  --font-serif: var(--font-serif-face), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-sans-face), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
@@ -36,55 +21,41 @@
   }
 
   body {
-    background: var(--color-sun);
+    background: var(--color-paper);
     color: var(--color-ink);
+    font-feature-settings: "ss01", "cv11";
   }
 
   ::selection {
     background: var(--color-ink);
-    color: var(--color-sun);
+    color: var(--color-paper);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-ink);
-    outline-offset: 2px;
+    outline: 1.5px solid var(--color-ink);
+    outline-offset: 3px;
   }
 }
 
-/*
- * Inverse theme: black ground, yellow ink. Swaps the color tokens for a
- * subtree, so every utility inside (and any dialog it opens) follows.
- * White surfaces become dark ones so pills and inputs stay legible.
- */
-.theme-inverse {
-  --color-sun: #0b0b0b;
-  --color-sun-deep: #161616;
-  --color-sun-pale: #1c1c1c;
-  --color-sun-hover: #262626;
-  --color-ink: #ffd60a;
-  --color-ink-soft: #cdb04a;
-  --color-white: #141414;
-  background: var(--color-sun);
-  color: var(--color-ink);
-  color-scheme: dark;
+/* Small uppercase labels above headings and in fact lists. */
+@utility eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
 }
 
-/* Inverse pages paint the whole content area, even when content is short. */
-main:has(> .theme-inverse) {
-  background: #0b0b0b;
+/* Large editorial display type. */
+@utility display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
+  text-wrap: balance;
 }
 
-/* Primary actions get a 44px touch target on phones. */
-@utility tap {
-  @media (width < 48rem) {
-    min-height: 2.75rem;
-  }
-}
-
-/*
- * iOS zooms the page when a focused field's text is under 16px. Unlayered so
- * it wins over text-sm utilities; phones only, desktop keeps the denser size.
- */
+/* iOS zooms the page when a focused field's text is under 16px. */
 @media (width < 48rem) {
   input,
   select,
@@ -93,11 +64,15 @@ main:has(> .theme-inverse) {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
+@media (prefers-reduced-motion: no-preference) {
+  .fade-up {
+    animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
 }

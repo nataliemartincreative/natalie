@@ -1,38 +1,42 @@
 import type { Metadata, Viewport } from "next";
-import { InlineScript } from "@/components/inline-script";
-import { SplashScreen } from "@/components/splash-screen";
-import { INTRO_STORAGE_KEY, SIDEBAR_STORAGE_KEY } from "@/lib/storage-keys";
-import { site } from "@/lib/site";
+import localFont from "next/font/local";
+import { company } from "@/content/portfolio";
 import "./globals.css";
 
+// Self-hosted (SIL Open Font License, see src/fonts).
+const serif = localFont({
+  src: [
+    { path: "../fonts/instrument-serif-latin-400-normal.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/instrument-serif-latin-400-italic.woff2", weight: "400", style: "italic" },
+  ],
+  variable: "--font-serif-face",
+  display: "swap",
+});
+
+const sans = localFont({
+  src: [
+    { path: "../fonts/inter-latin-wght-normal.woff2", weight: "100 900", style: "normal" },
+    { path: "../fonts/inter-latin-wght-italic.woff2", weight: "100 900", style: "italic" },
+  ],
+  variable: "--font-sans-face",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: { default: site.name, template: `%s · ${site.initials}` },
-  description: site.description,
+  title: { default: company.name, template: `%s · ${company.name}` },
+  description: company.intro,
+  // A private site for partners: keep it out of search engines.
+  robots: { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffd60a",
-  // Lets the yellow top bar run under the notch; padding uses safe-area insets.
-  viewportFit: "cover",
+  themeColor: "#f5f1ea",
 };
-
-// Runs before first paint so returning visitors never see a flash: the intro
-// plays once per browser session, and the sidebar keeps its collapsed state.
-const beforePaint = [
-  `try{if(sessionStorage.getItem(${JSON.stringify(INTRO_STORAGE_KEY)}))document.documentElement.dataset.intro="done"}catch(e){}`,
-  `try{if(localStorage.getItem(${JSON.stringify(SIDEBAR_STORAGE_KEY)})==="collapsed")document.documentElement.dataset.sidebar="collapsed"}catch(e){}`,
-].join(";");
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
-      <head>
-        <InlineScript html={beforePaint} />
-      </head>
-      <body className="h-full font-sans">
-        <SplashScreen />
-        {children}
-      </body>
+    <html lang="en" className={`${serif.variable} ${sans.variable} antialiased`}>
+      <body className="min-h-dvh font-sans text-[15px] leading-relaxed">{children}</body>
     </html>
   );
 }

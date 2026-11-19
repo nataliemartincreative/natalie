@@ -1,5 +1,5 @@
 {
-  "name": "natalies-favorite-website-ever",
+  "name": "diamond-home",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,13 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "0.135.0",
-    "@e965/xlsx": "0.20.3",
-    "@flora-ai/flora": "0.21.1",
-    "bwip-js": "^4.11.4",
-    "next": "16.4.2",
-    "pdf-lib": "1.17.1",
-    "pdfjs-dist": "6.4.299",
+    "next": "16.4.6",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
@@ -25,7 +19,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.4.2",
+    "eslint-config-next": "16.4.6",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
