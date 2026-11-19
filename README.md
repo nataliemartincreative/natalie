@@ -1,7 +1,7 @@
 # Diamond Home
 
 A private, password-protected portfolio site for Diamond Home's retail
-partners: our brands (Oasis, Alta, Clear Collective), the packaging formats
+partners: our brands (Oasis, Alta, Clear Collective, Maavari Home), the packaging formats
 we use, and pages of our work. Built with Next.js 16, React 19 and Tailwind
 CSS 4; every page is static.
 
@@ -10,7 +10,7 @@ CSS 4; every page is static.
 | Path | What it is |
 | --- | --- |
 | `/` | Diamond Home: intro, brands, branding techniques, selected work |
-| `/oasis`, `/alta`, `/clear-collective` | One page per brand: story, range, packaging, work |
+| `/oasis`, `/alta`, `/clear-collective`, `/maavari-home` | One page per brand: story, range, packaging, work |
 | `/techniques` | Packaging formats: bellyband, color sleeve, window box, insert card, 4-way band |
 | `/work`, `/work/[slug]` | Pages of our work |
 | `/enter` | Password page |

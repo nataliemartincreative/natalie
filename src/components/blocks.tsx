@@ -45,7 +45,7 @@ export function SectionHeading({
 export function BrandCard({ brand, priority }: { brand: Brand; priority?: boolean }) {
   return (
     <Link href={`/${brand.slug}`} className="group block">
-      <Figure image={brand.hero} tint={brand.tint} aspect="4 / 5" sizes="(min-width: 768px) 33vw, 100vw" priority={priority} />
+      <Figure image={brand.hero} tint={brand.tint} aspect="4 / 5" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" priority={priority} />
       <div className="mt-5 flex items-baseline justify-between gap-4">
         <h3 className="display text-4xl group-hover:italic">{brand.name}</h3>
         <span aria-hidden className="text-ink-soft transition-transform group-hover:translate-x-1">

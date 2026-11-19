@@ -14,7 +14,7 @@ export default function HomePage() {
 
       <Container>
         <SectionHeading eyebrow="Our brands" title="Brands" />
-        <ul className="mt-10 grid gap-x-8 gap-y-14 md:grid-cols-3">
+        <ul className="mt-10 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
           {brands.map((brand, i) => (
             <li key={brand.slug}>
               <BrandCard brand={brand} priority={i === 0} />

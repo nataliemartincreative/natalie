@@ -66,7 +66,7 @@ export interface Work {
   gallery: Img[];
 }
 
-export type BrandSlug = "oasis" | "alta" | "clear-collective";
+export type BrandSlug = "oasis" | "alta" | "clear-collective" | "maavari-home";
 export type TechniqueSlug = "bellyband" | "color-sleeve" | "window-box" | "insert-card" | "four-way-band";
 
 export const company = {
@@ -111,6 +111,15 @@ export const brands: Brand[] = [
     categories: [],
     accent: "#5f6b78",
     tint: "#e0e3e6",
+  },
+  {
+    slug: "maavari-home",
+    name: "Maavari Home",
+    tagline: "A new brand from Diamond Home.",
+    intro: ["More on Maavari Home is coming soon. Ask your Diamond Home contact for the current range."],
+    categories: [],
+    accent: "#8a5a44",
+    tint: "#ebe0d7",
   },
 ];
 
