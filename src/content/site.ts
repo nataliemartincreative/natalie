@@ -83,20 +83,26 @@ export const projects: Project[] = [
       { alt: "North Star: the restrained, minimal reference that guided the identity", aspect: "16 / 9", tint: "#4a4a4a" }, // 05-north-star.jpg
     ],
   },
-  // PLACEHOLDER projects: replace with your own work.
   {
-    slug: "project-two",
-    title: "Project Two",
-    year: "2026",
-    disciplines: ["Brand identity"],
-    summary: "Placeholder project. Replace with a short line about the work.",
-    cover: { alt: "Project Two cover", tint: "#2f4a5c" },
-    body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
+    slug: "kraftwerk",
+    title: "Kraftwerk",
+    disciplines: ["Brand Experience", "Strategy"],
+    client: "Kraftwerk × Beautiful Losers",
+    summary:
+      "A limited-edition skateboard collection with the art collective Beautiful Losers, marking Kraftwerk’s nine-night residency with the LA Philharmonic at Walt Disney Concert Hall.",
+    body: [
+      "Nine hand-lacquered decks, one for each pivotal album of the band’s catalog from 1974 to 2017, carry Kraftwerk’s Bauhaus-inspired graphics and turn skateboards into sculptural collectibles between street culture and fine art.",
+      "I created the print-ready files for the concert. The collection sold only at Comme des Garçons’ Dover Street Market, in a single production run.",
+    ],
+    // Image files go in public/work/kraftwerk/; add `src` once each is there.
+    cover: { alt: "Kraftwerk × Beautiful Losers skateboard collection", aspect: "16 / 9", tint: "#8f1d17" },
     images: [
-      { alt: "Project Two image 1", aspect: "3 / 2" },
-      { alt: "Project Two image 2", aspect: "3 / 2" },
+      { alt: "The nine hand-lacquered decks", aspect: "16 / 9", tint: "#1d1d1d" },
+      { alt: "Deck detail", aspect: "4 / 5", tint: "#8f1d17" },
+      { alt: "Deck detail", aspect: "4 / 5", tint: "#2a2a2a" },
     ],
   },
+  // PLACEHOLDER projects: replace with your own work.
   {
     slug: "project-three",
     title: "Project Three",
