@@ -2,40 +2,51 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { ContactLink } from "@/content/site";
+import { Container, Wordmark } from "./ui";
 
 const links = [
   { href: "/", label: "Work" },
   { href: "/about", label: "About" },
 ];
 
-/** One thin bar: name on the left, two links on the right. Fits every width. */
-export function SiteHeader({ name, role }: { name: string; role: string }) {
+/** Wordmark left, links and social links right, a rule underneath. */
+export function SiteHeader({ name, social }: { name: string; social: ContactLink[] }) {
   const pathname = usePathname();
   const active = (href: string) => (href === "/" ? pathname === "/" || pathname.startsWith("/work/") : pathname.startsWith(href));
 
   return (
-    <header className="sticky top-0 z-40 border-b border-ink bg-paper">
-      <div className="label flex h-12 items-center justify-between gap-4 px-4 sm:px-6">
-        <Link href="/" className="flex min-h-11 items-center gap-3">
-          <span className="font-medium text-ink">{name}</span>
-          <span className="hidden text-ink-soft sm:inline">{role}</span>
-        </Link>
-        <nav aria-label="Main" className="flex items-center gap-5 sm:gap-8">
-          {links.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              aria-current={active(l.href) ? "page" : undefined}
-              className="flex min-h-11 items-center text-ink-soft transition-colors hover:text-ink aria-[current=page]:text-ink"
-            >
-              <span aria-hidden className="mr-1.5 inline-block w-2 text-signal">
-                {active(l.href) ? "●" : ""}
-              </span>
-              {l.label}
-            </Link>
-          ))}
-        </nav>
-      </div>
+    <header>
+      <Container>
+        <div className="flex items-center justify-between gap-6 border-b border-rule py-6 md:py-8">
+          <Link href="/" aria-label={`${name}, home`}>
+            <Wordmark name={name} />
+          </Link>
+          <nav aria-label="Main" className="flex items-center gap-5 text-[15px] font-medium sm:gap-7">
+            {links.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                aria-current={active(l.href) ? "page" : undefined}
+                className="flex min-h-11 items-center underline-offset-[6px] hover:text-accent aria-[current=page]:underline"
+              >
+                {l.label}
+              </Link>
+            ))}
+            {social.map((s) => (
+              <a
+                key={s.href}
+                href={s.href}
+                target={s.href.startsWith("http") ? "_blank" : undefined}
+                rel="noreferrer"
+                className="hidden min-h-11 items-center text-mute hover:text-accent sm:flex"
+              >
+                {s.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+      </Container>
     </header>
   );
 }

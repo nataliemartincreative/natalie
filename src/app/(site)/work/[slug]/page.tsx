@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Figure } from "@/components/figure";
+import { Container } from "@/components/ui";
 import { getProject, nextProject, projects } from "@/content/site";
 
 // Only projects in the content file exist; anything else is a 404.
@@ -19,61 +20,68 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
 export default async function ProjectPage({ params }: PageProps<"/work/[slug]">) {
   const project = getProject((await params).slug);
   if (!project) notFound();
-  const index = projects.indexOf(project);
   const next = nextProject(project.slug);
+  const [hero, ...rest] = project.cover ? [project.cover, ...project.images] : project.images;
 
-  const meta = [
-    { label: "Year", value: project.year },
-    { label: "Discipline", value: project.disciplines.join(", ") },
+  const details = [
+    { label: "Project scope", value: project.disciplines.join(", ") },
     ...(project.client ? [{ label: "Client", value: project.client }] : []),
+    { label: "Year", value: project.year },
+    ...(project.tools?.length ? [{ label: "Tools used", value: project.tools.join(", ") }] : []),
   ];
 
   return (
     <article>
-      <header className="fade-up px-4 pt-10 pb-12 sm:px-6 md:pt-16">
-        <p className="label text-ink-soft">
-          <span className="text-signal">{String(index + 1).padStart(2, "0")}</span> / {String(projects.length).padStart(2, "0")}
-        </p>
-        <h1 className="display mt-6 text-[17vw] leading-[0.85] md:text-[11vw]">{project.title}</h1>
-      </header>
+      <Figure image={hero} aspect="16 / 8" priority sizes="100vw" showCaption={false} className="mt-6 md:mt-8" />
 
-      <div className="grid gap-10 border-y border-ink px-4 py-8 sm:px-6 md:grid-cols-[1fr_1.4fr] md:gap-16">
-        <dl className="grid grid-cols-2 gap-x-6 gap-y-5 self-start sm:grid-cols-3 md:grid-cols-1">
-          {meta.map((m) => (
-            <div key={m.label}>
-              <dt className="label text-ink-soft">{m.label}</dt>
-              <dd className="mt-1">{m.value}</dd>
-            </div>
-          ))}
-        </dl>
-        <div className="grid gap-4">
-          <p className="display text-3xl leading-tight md:text-4xl">{project.summary}</p>
-          {project.body.map((p) => (
-            <p key={p} className="max-w-2xl text-ink-soft">
-              {p}
-            </p>
-          ))}
+      <Container className="fade-up grid gap-10 pt-14 md:grid-cols-2 md:gap-16 md:pt-20">
+        <div>
+          <h1 className="headline text-4xl md:text-6xl">{project.title}</h1>
+          <p className="mt-6 max-w-lg text-lg text-ink/85">{project.summary}</p>
         </div>
-      </div>
+        <div className="grid content-start gap-6">
+          <dl className="grid gap-2">
+            {details.map((d) => (
+              <div key={d.label}>
+                <dt className="inline text-sm font-medium tracking-wide uppercase underline underline-offset-4">{d.label}:</dt>{" "}
+                <dd className="inline">{d.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className="grid gap-4 text-mute">
+            {project.body.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
+          </div>
+        </div>
+      </Container>
 
-      <div className="mt-4 grid gap-4 px-4 sm:grid-cols-2 sm:px-6">
-        {project.images.map((img, i) => (
-          <Figure
-            key={`${img.alt}-${i}`}
-            image={img}
-            priority={i === 0}
-            // Landscape images span both columns; portrait ones pair up.
-            className={(img.aspect ?? "3 / 2") === "3 / 2" || project.images.length === 1 ? "sm:col-span-2" : ""}
-            sizes="(min-width: 640px) 50vw, 100vw"
-          />
-        ))}
-      </div>
+      {rest.length > 0 && (
+        <Container className="mt-16 grid gap-4 sm:grid-cols-2 md:mt-24 md:gap-5">
+          {rest.map((img, i) => (
+            <Figure
+              key={`${img.alt}-${i}`}
+              image={img}
+              sizes="(min-width: 640px) 50vw, 100vw"
+              // Landscape images span both columns; portrait ones pair up.
+              className={(img.aspect ?? "3 / 2") === "3 / 2" || rest.length === 1 ? "sm:col-span-2" : ""}
+            />
+          ))}
+        </Container>
+      )}
 
       {projects.length > 1 && (
-        <Link href={`/work/${next.slug}`} className="group mt-24 block border-t border-ink px-4 pt-4 pb-10 hover:bg-ink hover:text-paper sm:px-6">
-          <span className="label text-ink-soft group-hover:text-signal">Next project →</span>
-          <span className="display mt-4 block text-[14vw] leading-[0.85] group-hover:italic md:text-[9vw]">{next.title}</span>
-        </Link>
+        <Container className="mt-24">
+          <Link href={`/work/${next.slug}`} className="group flex items-end justify-between gap-6 border-t border-rule pt-8">
+            <span>
+              <span className="text-sm text-mute">Next project</span>
+              <span className="headline mt-2 block text-4xl group-hover:text-accent md:text-6xl">{next.title}</span>
+            </span>
+            <span aria-hidden className="headline text-4xl transition-transform group-hover:translate-x-2 group-hover:text-accent md:text-6xl">
+              →
+            </span>
+          </Link>
+        </Container>
       )}
     </article>
   );

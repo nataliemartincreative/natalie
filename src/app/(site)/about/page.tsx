@@ -1,50 +1,52 @@
 import type { Metadata } from "next";
+import { Container } from "@/components/ui";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = { title: "About" };
 
 export default function AboutPage() {
   return (
-    <div className="fade-up px-4 pt-10 sm:px-6 md:pt-16">
-      <p className="label text-ink-soft">About</p>
-      <h1 className="display mt-6 max-w-5xl text-5xl leading-[0.95] md:text-8xl">{site.about[0]}</h1>
-
-      <div className="mt-16 grid gap-12 border-t border-ink pt-8 md:grid-cols-[1fr_1.4fr] md:gap-16">
-        <div className="grid content-start gap-10">
-          <div>
-            <h2 className="label text-ink-soft">Disciplines</h2>
-            <ul className="mt-3 grid gap-1 text-lg">
-              {site.disciplines.map((d) => (
-                <li key={d}>{d}</li>
-              ))}
-            </ul>
-          </div>
-          {site.contact.length > 0 && (
-            <div>
-              <h2 className="label text-ink-soft">Contact</h2>
-              <ul className="mt-3 grid gap-1 text-lg">
-                {site.contact.map((c) => (
-                  <li key={c.href}>
-                    <a
-                      href={c.href}
-                      target={c.href.startsWith("http") ? "_blank" : undefined}
-                      rel="noreferrer"
-                      className="underline decoration-1 underline-offset-4 hover:text-signal"
-                    >
-                      {c.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-        <div className="grid max-w-2xl content-start gap-5 text-lg leading-relaxed">
-          {site.about.slice(1).map((p) => (
+    <Container className="fade-up grid gap-14 pt-16 md:grid-cols-2 md:gap-12 lg:grid-cols-[1fr_minmax(0,1.1fr)_minmax(0,1.3fr)] md:pt-24">
+      {/* Left column stays empty on wide screens, as on the reference site. */}
+      <div className="hidden lg:block" aria-hidden />
+      <section aria-labelledby="capabilities">
+        <h1 id="capabilities" className="headline text-3xl text-accent md:text-4xl">
+          Capabilities
+        </h1>
+        <ul className="mt-8 grid gap-1">
+          {site.capabilities.map((c) => (
+            <li key={c} className="headline text-4xl leading-tight md:text-[2.75rem]">
+              {c}
+            </li>
+          ))}
+        </ul>
+      </section>
+      <section aria-labelledby="about-me">
+        <h2 id="about-me" className="headline text-3xl text-accent md:text-4xl">
+          About Me
+        </h2>
+        <div className="mt-8 grid gap-5 leading-relaxed">
+          {site.about.map((p) => (
             <p key={p}>{p}</p>
           ))}
         </div>
-      </div>
-    </div>
+        {site.contact.length > 0 && (
+          <ul className="mt-8 grid gap-1">
+            {site.contact.map((c) => (
+              <li key={c.href}>
+                <a
+                  href={c.href}
+                  target={c.href.startsWith("http") ? "_blank" : undefined}
+                  rel="noreferrer"
+                  className="text-accent underline underline-offset-4 hover:no-underline"
+                >
+                  {c.label} ↗
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    </Container>
   );
 }

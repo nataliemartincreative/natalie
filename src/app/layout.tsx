@@ -24,13 +24,13 @@ const sans = localFont({
 
 export const metadata: Metadata = {
   title: { default: `${site.name}, ${site.role}`, template: `%s · ${site.name}` },
-  description: site.intro,
+  description: site.description,
   // Private for now: keep it out of search engines.
   robots: { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f1efea",
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

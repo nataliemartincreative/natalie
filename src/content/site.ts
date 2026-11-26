@@ -13,6 +13,8 @@ export interface Img {
   /** CSS aspect ratio, e.g. "4 / 5". Defaults to 3 / 2. */
   aspect?: string;
   caption?: string;
+  /** Placeholder color shown until `src` is set. */
+  tint?: string;
 }
 
 export interface Project {
@@ -21,6 +23,8 @@ export interface Project {
   year: string;
   disciplines: string[];
   client?: string;
+  /** Software or techniques, shown with the project details. */
+  tools?: string[];
   /** One or two sentences shown under the title. */
   summary: string;
   body: string[];
@@ -33,16 +37,23 @@ export interface ContactLink {
   href: string;
 }
 
-// PLACEHOLDER: confirm the name and role, and replace the intro and about text.
+// PLACEHOLDER: confirm the name and role, and replace the statement and about text.
 export const site = {
   name: "Natalie Martin",
   role: "Designer",
-  intro: "Packaging, brand identity and image-making. A selection of creative work.",
+  /**
+   * The opening sentence on the home page. Wrap words in *asterisks* to
+   * pick them out in the accent color.
+   */
+  statement:
+    "Natalie is a designer working in *packaging*, *brand identity* and *art direction*, making work that is clear, considered and a little unexpected.",
+  /** Short description used for the browser tab and link previews. */
+  description: "Packaging, brand identity and art direction.",
   about: [
-    "Natalie Martin is a designer working across packaging, brand identity and visual storytelling.",
     "This is a placeholder bio. Replace it with a few sentences about your practice, the kind of work you do and who you've worked with.",
+    "Add a second paragraph about what drives your work, or what you're up to when you're not designing.",
   ],
-  disciplines: ["Packaging", "Brand identity", "Art direction", "Illustration", "Photography"],
+  capabilities: ["Packaging", "Brand identity", "Art direction", "Illustration", "Photography"],
   /** e.g. { label: "Email", href: "mailto:..." }, { label: "Instagram", href: "https://instagram.com/..." } */
   contact: [] as ContactLink[],
 };
@@ -54,7 +65,9 @@ export const projects: Project[] = [
     title: "Project One",
     year: "2026",
     disciplines: ["Packaging"],
+    tools: ["Illustrator", "Photoshop"],
     summary: "Placeholder project. Replace with a short line about the work.",
+    cover: { alt: "Project One cover", tint: "#7a3b2e" },
     body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
     images: [
       { alt: "Project One image 1", aspect: "3 / 2" },
@@ -68,6 +81,7 @@ export const projects: Project[] = [
     year: "2026",
     disciplines: ["Brand identity"],
     summary: "Placeholder project. Replace with a short line about the work.",
+    cover: { alt: "Project Two cover", tint: "#2f4a5c" },
     body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
     images: [
       { alt: "Project Two image 1", aspect: "3 / 2" },
@@ -80,6 +94,7 @@ export const projects: Project[] = [
     year: "2025",
     disciplines: ["Art direction", "Photography"],
     summary: "Placeholder project. Replace with a short line about the work.",
+    cover: { alt: "Project Three cover", tint: "#5d5a2b" },
     body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
     images: [
       { alt: "Project Three image 1", aspect: "4 / 5" },
@@ -92,6 +107,7 @@ export const projects: Project[] = [
     year: "2025",
     disciplines: ["Illustration"],
     summary: "Placeholder project. Replace with a short line about the work.",
+    cover: { alt: "Project Four cover", tint: "#4a2f57" },
     body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
     images: [{ alt: "Project Four image 1", aspect: "3 / 2" }],
   },

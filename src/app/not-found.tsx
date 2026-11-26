@@ -1,16 +1,22 @@
 import Link from "next/link";
+import { Container, Wordmark } from "@/components/ui";
 import { site } from "@/content/site";
 
 export default function NotFound() {
   return (
-    <main className="grid min-h-dvh content-center px-4 sm:px-6">
-      <p className="label text-ink-soft">404 · {site.name}</p>
-      <h1 className="display mt-6 text-[18vw] leading-[0.82] md:text-[11vw]">
-        Not <em>here.</em>
-      </h1>
-      <Link href="/" className="label mt-10 underline underline-offset-4 hover:text-signal">
-        Back to the work →
-      </Link>
-    </main>
+    <Container className="grid min-h-dvh grid-rows-[auto_1fr]">
+      <div className="border-b border-rule py-6 md:py-8">
+        <Wordmark name={site.name} />
+      </div>
+      <div className="grid content-center">
+        <p className="text-mute">404</p>
+        <h1 className="headline mt-3 text-5xl md:text-7xl">
+          Nothing <span className="text-accent">here.</span>
+        </h1>
+        <Link href="/" className="mt-8 underline underline-offset-4 hover:text-accent">
+          Back to the work →
+        </Link>
+      </div>
+    </Container>
   );
 }

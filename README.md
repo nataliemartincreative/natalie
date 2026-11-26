@@ -1,30 +1,35 @@
 # Natalie Martin
 
-A personal portfolio for all my creative work: a simple, editorial site with
-a numbered work index, project pages and an about page. Private behind a
-password for now. Built with Next.js 16, React 19 and Tailwind CSS 4; every
-page is static.
+A personal portfolio for all my creative work: a simple site with a statement,
+a grid of featured work, project pages and an about page, modeled on the
+structure of malloryblackwell.com. White background, black type, one orange
+accent. Private behind a password for now. Built with Next.js 16, React 19
+and Tailwind CSS 4; every page is static.
 
 ## Pages
 
 | Path | What it is |
 | --- | --- |
-| `/` | Name, intro and the index of work |
+| `/` | Statement and a two-column grid of featured work |
 | `/work/[slug]` | One page per project: details, text and images |
-| `/about` | Bio, disciplines and contact links |
+| `/about` | Capabilities, bio and contact links |
 | `/enter` | Password page |
 
 ## Editing content
 
-Everything lives in [`src/content/site.ts`](src/content/site.ts): name,
-role, intro, about text, disciplines, contact links and projects. To add a
-project, copy an entry in `projects` and give it a new `slug`.
+Everything lives in [`src/content/site.ts`](src/content/site.ts):
+
+- `statement`: the opening sentence. Wrap words in `*asterisks*` to pick
+  them out in orange.
+- `about`, `capabilities`, `contact`: the about page and footer links.
+- `projects`: copy an entry and give it a new `slug` to add one.
 
 Images go in `public/` (e.g. `public/work/project-one/cover.jpg`) and are
-referenced as `"/work/project-one/cover.jpg"` in `cover` or `images`. Set
-`aspect` (e.g. `"4 / 5"`) to match each image. Landscape (3 / 2) images run
-full width on project pages; others pair up side by side. Anything without
-a `src` shows an "Image to come" panel.
+referenced as `"/work/project-one/cover.jpg"`. The `cover` is the square image
+in the home grid and the wide hero on the project page; `images` follow
+below it. Set `aspect` (e.g. `"4 / 5"`) to match each image: landscape (3 / 2)
+images run full width, others pair up side by side. Anything without a `src`
+shows an "Image to come" panel, in its `tint` color if one is set.
 
 ## Password
 

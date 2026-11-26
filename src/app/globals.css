@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* Off-white paper, near-black ink, and one signal color used sparingly. */
-  --color-paper: #f1efea;
-  --color-panel: #e4e1da;
-  --color-ink: #111110;
-  --color-ink-soft: #6f6c66;
-  --color-signal: #ff3d00;
+  /* White ground, black type, one orange accent (4.5:1 on white). */
+  --color-paper: #ffffff;
+  --color-panel: #f1f0ee;
+  --color-ink: #111111;
+  --color-mute: #6b6b6b;
+  --color-rule: #e3e1de;
+  --color-accent: #cf430b;
 }
 
 @theme inline {
   --font-serif: var(--font-serif-face), "Iowan Old Style", Georgia, serif;
   --font-sans: var(--font-sans-face), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
 }
 
 @layer base {
@@ -27,33 +27,29 @@
   }
 
   ::selection {
-    background: var(--color-signal);
+    background: var(--color-accent);
     color: var(--color-paper);
   }
 
   :focus-visible {
-    outline: 1.5px solid var(--color-signal);
+    outline: 1.5px solid var(--color-accent);
     outline-offset: 3px;
   }
 }
 
-/* Small typewriter labels: metadata, numbers, navigation. */
-@utility label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  line-height: 1.4;
+/* Bold statement and heading type. */
+@utility headline {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  text-wrap: balance;
 }
 
-/* Large editorial display type. */
-@utility display {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  letter-spacing: -0.025em;
-  line-height: 0.92;
-  text-wrap: balance;
+/* Small section labels above a rule. */
+@utility kicker {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
 }
 
 /* iOS zooms the page when a focused field's text is under 16px. */
