@@ -37,13 +37,13 @@ export interface ContactLink {
   href: string;
 }
 
-// PLACEHOLDER: confirm the name and role, and replace the home statement.
+// PLACEHOLDER: confirm the name and role.
 export const site = {
   name: "Natalie Martin",
   role: "Designer",
   /** The opening sentence on the home page. */
   statement:
-    "Natalie is a designer working in packaging, brand identity and art direction, making work that is clear, considered and a little unexpected.",
+    "Natalie is a designer specializing in packaging and the physicality of things, creating intentional, human-driven work that seeks truth and solves real problems, with AI as a tool in the process.",
   /** Short description used for the browser tab and link previews. */
   description: "Packaging, brand identity and art direction.",
   /** The large opening lines at the top of the about text, one per line. */
