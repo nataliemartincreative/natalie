@@ -37,7 +37,7 @@ export interface ContactLink {
   href: string;
 }
 
-// PLACEHOLDER: confirm the name and role, and replace the statement and about text.
+// PLACEHOLDER: confirm the name and role, and replace the home statement.
 export const site = {
   name: "Natalie Martin",
   role: "Designer",
@@ -46,9 +46,12 @@ export const site = {
     "Natalie is a designer working in packaging, brand identity and art direction, making work that is clear, considered and a little unexpected.",
   /** Short description used for the browser tab and link previews. */
   description: "Packaging, brand identity and art direction.",
+  /** The large opening lines at the top of the about text, one per line. */
+  aboutOpening: ["Design is a language.", "A form of communication beyond words."],
   about: [
-    "This is a placeholder bio. Replace it with a few sentences about your practice, the kind of work you do and who you've worked with.",
-    "Add a second paragraph about what drives your work, or what you're up to when you're not designing.",
+    "I’ve always been drawn to the power of visual communication—the way thoughtful design, typography, and physical experiences can express what words alone sometimes cannot.",
+    "I’m particularly drawn to the physicality of things and the systems behind it. I enjoy creating structure from chaos and ensuring every detail serves a purpose.",
+    "As industries evolve, I’ve embraced new tools that help accelerate workflows and unlock new possibilities. Ultimately, I’m driven by creating thoughtful, intentional design that connects people and brands with clarity and purpose.",
   ],
   capabilities: ["Packaging", "Brand identity", "Art direction", "Illustration", "Photography"],
   /** e.g. { label: "Email", href: "mailto:..." }, { label: "Instagram", href: "https://instagram.com/..." } */

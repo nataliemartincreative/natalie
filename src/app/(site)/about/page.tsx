@@ -25,7 +25,15 @@ export default function AboutPage() {
         <h2 id="about-me" className="headline text-3xl text-mute md:text-4xl">
           About Me
         </h2>
-        <div className="mt-8 grid gap-5 leading-relaxed">
+        <p className="headline mt-8 text-2xl leading-snug md:text-[1.75rem]">
+          {site.aboutOpening.map((line, i) => (
+            <span key={line} className="block">
+              {line}
+              {i < site.aboutOpening.length - 1 && " "}
+            </span>
+          ))}
+        </p>
+        <div className="mt-6 grid gap-5 leading-relaxed">
           {site.about.map((p) => (
             <p key={p}>{p}</p>
           ))}
