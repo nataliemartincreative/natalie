@@ -86,6 +86,7 @@ export const projects: Project[] = [
   {
     slug: "kraftwerk",
     title: "Kraftwerk",
+    year: "2025",
     disciplines: ["Brand Experience", "Strategy"],
     client: "Kraftwerk × Beautiful Losers",
     studio: "SNG GRP",
