@@ -1,63 +1,28 @@
-import Link from "next/link";
-import { Container } from "@/components/blocks";
 import { SiteHeader } from "@/components/site-header";
-import { brands, company } from "@/content/portfolio";
+import { site } from "@/content/site";
 import { signOut } from "../enter/actions";
-
-const secondary = [
-  { href: "/techniques", label: "Techniques" },
-  { href: "/work", label: "Work" },
-];
 
 export default function SiteLayout({ children }: LayoutProps<"/">) {
   return (
     <>
-      <SiteHeader
-        name={company.name}
-        brands={brands.map((b) => ({ href: `/${b.slug}`, label: b.name }))}
-        secondary={secondary}
-      />
+      <SiteHeader name={site.name} role={site.role} />
       <main>{children}</main>
-      <footer className="mt-28 border-t border-line pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-12">
-        <Container className="grid gap-10 md:grid-cols-[1fr_auto_auto] md:gap-16">
-          <div>
-            <Link href="/" className="display text-3xl">
-              {company.name}
-            </Link>
-            <p className="mt-3 max-w-sm text-[13px] text-ink-soft">{company.confidentiality}</p>
-          </div>
-          <nav aria-label="Brands" className="text-[13px]">
-            <p className="eyebrow">Brands</p>
-            <ul className="mt-3 grid gap-1.5">
-              {brands.map((b) => (
-                <li key={b.slug}>
-                  <Link href={`/${b.slug}`} className="hover:underline">
-                    {b.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <div className="text-[13px]">
-            <p className="eyebrow">More</p>
-            <ul className="mt-3 grid gap-1.5">
-              {secondary.map((s) => (
-                <li key={s.href}>
-                  <Link href={s.href} className="hover:underline">
-                    {s.label}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <form action={signOut}>
-                  <button type="submit" className="text-ink-soft hover:text-ink hover:underline">
-                    Sign out
-                  </button>
-                </form>
-              </li>
-            </ul>
-          </div>
-        </Container>
+      <footer className="label mt-32 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-ink px-4 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-ink-soft sm:px-6">
+        <span>
+          © {new Date().getFullYear()} {site.name}
+        </span>
+        <span className="flex items-center gap-6">
+          {site.contact.map((c) => (
+            <a key={c.href} href={c.href} className="hover:text-ink" target={c.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+              {c.label}
+            </a>
+          ))}
+          <form action={signOut}>
+            <button type="submit" className="uppercase hover:text-ink">
+              Sign out
+            </button>
+          </form>
+        </span>
       </footer>
     </>
   );

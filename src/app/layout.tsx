@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { company } from "@/content/portfolio";
+import { site } from "@/content/site";
 import "./globals.css";
 
 // Self-hosted (SIL Open Font License, see src/fonts).
@@ -23,14 +23,14 @@ const sans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: { default: company.name, template: `%s · ${company.name}` },
-  description: company.intro,
-  // A private site for partners: keep it out of search engines.
+  title: { default: `${site.name}, ${site.role}`, template: `%s · ${site.name}` },
+  description: site.intro,
+  // Private for now: keep it out of search engines.
   robots: { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f5f1ea",
+  themeColor: "#f1efea",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

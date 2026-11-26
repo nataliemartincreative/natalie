@@ -1,17 +1,16 @@
 import Link from "next/link";
-import { company } from "@/content/portfolio";
+import { site } from "@/content/site";
 
 export default function NotFound() {
   return (
-    <main className="grid min-h-dvh place-items-center px-5 text-center">
-      <div>
-        <p className="eyebrow">{company.name}</p>
-        <h1 className="display mt-4 text-6xl">Page not found</h1>
-        <p className="mt-4 text-ink-soft">This page doesn&apos;t exist or has moved.</p>
-        <Link href="/" className="mt-8 inline-block text-sm underline underline-offset-4 hover:no-underline">
-          Back to {company.name}
-        </Link>
-      </div>
+    <main className="grid min-h-dvh content-center px-4 sm:px-6">
+      <p className="label text-ink-soft">404 · {site.name}</p>
+      <h1 className="display mt-6 text-[18vw] leading-[0.82] md:text-[11vw]">
+        Not <em>here.</em>
+      </h1>
+      <Link href="/" className="label mt-10 underline underline-offset-4 hover:text-signal">
+        Back to the work →
+      </Link>
     </main>
   );
 }

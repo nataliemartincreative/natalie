@@ -1,0 +1,106 @@
+/**
+ * Everything the site shows lives here: your name, intro, about text,
+ * contact links and projects. Edit this file to change any of it.
+ *
+ * Images go in /public (e.g. public/work/project-one/cover.jpg) and are
+ * referenced by path ("/work/project-one/cover.jpg"). Leave `src` out and the
+ * page shows an "Image to come" panel in its place.
+ */
+
+export interface Img {
+  src?: string;
+  alt: string;
+  /** CSS aspect ratio, e.g. "4 / 5". Defaults to 3 / 2. */
+  aspect?: string;
+  caption?: string;
+}
+
+export interface Project {
+  slug: string;
+  title: string;
+  year: string;
+  disciplines: string[];
+  client?: string;
+  /** One or two sentences shown under the title. */
+  summary: string;
+  body: string[];
+  cover?: Img;
+  images: Img[];
+}
+
+export interface ContactLink {
+  label: string;
+  href: string;
+}
+
+// PLACEHOLDER: confirm the name and role, and replace the intro and about text.
+export const site = {
+  name: "Natalie Martin",
+  role: "Designer",
+  intro: "Packaging, brand identity and image-making. A selection of creative work.",
+  about: [
+    "Natalie Martin is a designer working across packaging, brand identity and visual storytelling.",
+    "This is a placeholder bio. Replace it with a few sentences about your practice, the kind of work you do and who you've worked with.",
+  ],
+  disciplines: ["Packaging", "Brand identity", "Art direction", "Illustration", "Photography"],
+  /** e.g. { label: "Email", href: "mailto:..." }, { label: "Instagram", href: "https://instagram.com/..." } */
+  contact: [] as ContactLink[],
+};
+
+// PLACEHOLDER projects: replace with your own work.
+export const projects: Project[] = [
+  {
+    slug: "project-one",
+    title: "Project One",
+    year: "2026",
+    disciplines: ["Packaging"],
+    summary: "Placeholder project. Replace with a short line about the work.",
+    body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
+    images: [
+      { alt: "Project One image 1", aspect: "3 / 2" },
+      { alt: "Project One image 2", aspect: "4 / 5" },
+      { alt: "Project One image 3", aspect: "4 / 5" },
+    ],
+  },
+  {
+    slug: "project-two",
+    title: "Project Two",
+    year: "2026",
+    disciplines: ["Brand identity"],
+    summary: "Placeholder project. Replace with a short line about the work.",
+    body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
+    images: [
+      { alt: "Project Two image 1", aspect: "3 / 2" },
+      { alt: "Project Two image 2", aspect: "3 / 2" },
+    ],
+  },
+  {
+    slug: "project-three",
+    title: "Project Three",
+    year: "2025",
+    disciplines: ["Art direction", "Photography"],
+    summary: "Placeholder project. Replace with a short line about the work.",
+    body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
+    images: [
+      { alt: "Project Three image 1", aspect: "4 / 5" },
+      { alt: "Project Three image 2", aspect: "4 / 5" },
+    ],
+  },
+  {
+    slug: "project-four",
+    title: "Project Four",
+    year: "2025",
+    disciplines: ["Illustration"],
+    summary: "Placeholder project. Replace with a short line about the work.",
+    body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
+    images: [{ alt: "Project Four image 1", aspect: "3 / 2" }],
+  },
+];
+
+export const getProject = (slug: string) => projects.find((p) => p.slug === slug);
+
+/** The project after this one, wrapping around to the first. */
+export function nextProject(slug: string): Project {
+  const i = projects.findIndex((p) => p.slug === slug);
+  return projects[(i + 1) % projects.length];
+}

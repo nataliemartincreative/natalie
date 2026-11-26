@@ -1,17 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* Warm paper and ink, with a soft line color for rules and borders. */
-  --color-paper: #f5f1ea;
-  --color-paper-deep: #ebe5da;
-  --color-ink: #1d1b18;
-  --color-ink-soft: #6a6358;
-  --color-line: #dbd3c6;
+  /* Off-white paper, near-black ink, and one signal color used sparingly. */
+  --color-paper: #f1efea;
+  --color-panel: #e4e1da;
+  --color-ink: #111110;
+  --color-ink-soft: #6f6c66;
+  --color-signal: #ff3d00;
 }
 
 @theme inline {
   --font-serif: var(--font-serif-face), "Iowan Old Style", Georgia, serif;
   --font-sans: var(--font-sans-face), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
 }
 
 @layer base {
@@ -23,35 +24,35 @@
   body {
     background: var(--color-paper);
     color: var(--color-ink);
-    font-feature-settings: "ss01", "cv11";
   }
 
   ::selection {
-    background: var(--color-ink);
+    background: var(--color-signal);
     color: var(--color-paper);
   }
 
   :focus-visible {
-    outline: 1.5px solid var(--color-ink);
+    outline: 1.5px solid var(--color-signal);
     outline-offset: 3px;
   }
 }
 
-/* Small uppercase labels above headings and in fact lists. */
-@utility eyebrow {
+/* Small typewriter labels: metadata, numbers, navigation. */
+@utility label {
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
+  font-weight: 400;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-ink-soft);
+  line-height: 1.4;
 }
 
 /* Large editorial display type. */
 @utility display {
   font-family: var(--font-serif);
   font-weight: 400;
-  letter-spacing: -0.015em;
-  line-height: 1.02;
+  letter-spacing: -0.025em;
+  line-height: 0.92;
   text-wrap: balance;
 }
 
@@ -66,13 +67,13 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .fade-up {
-    animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }
 
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
 }

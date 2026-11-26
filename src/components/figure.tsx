@@ -1,49 +1,45 @@
 import Image from "next/image";
-import type { Img } from "@/content/portfolio";
+import type { Img } from "@/content/site";
 
 /**
- * An image in a fixed-ratio frame. Without a `src` it shows a quiet tinted
- * panel marked "Photography to come", so pages hold their layout until real
- * photos are added.
+ * An image in a fixed-ratio frame. Without a `src` it shows a plain panel
+ * with crop marks and "Image to come", so layouts hold until work is added.
  */
 export function Figure({
   image,
-  tint = "var(--color-paper-deep)",
-  aspect = "4 / 3",
-  caption,
-  sizes = "(min-width: 768px) 50vw, 100vw",
+  aspect = "3 / 2",
+  sizes = "100vw",
   priority,
+  showCaption = true,
   className = "",
 }: {
   image?: Img;
-  tint?: string;
   aspect?: string;
-  caption?: string;
   sizes?: string;
   priority?: boolean;
+  showCaption?: boolean;
   className?: string;
 }) {
   return (
     <figure className={className}>
-      <div className="relative overflow-hidden" style={{ aspectRatio: image?.aspect ?? aspect, background: tint }}>
+      <div className="relative overflow-hidden bg-panel" style={{ aspectRatio: image?.aspect ?? aspect }}>
         {image?.src ? (
           <Image src={image.src} alt={image.alt} fill sizes={sizes} priority={priority} className="object-cover" />
         ) : (
-          <div role="img" aria-label={image?.alt ?? "Photography to come"} className="@container absolute inset-0">
-            <div className="absolute inset-3 border border-white/50 sm:inset-4" />
-            <div className="absolute inset-0 grid place-items-center">
-              <span className="flex items-center gap-2 text-[10px] font-medium tracking-[0.2em] text-ink/40 uppercase">
-                <svg viewBox="0 0 10 10" className="size-2" aria-hidden>
-                  <path d="M5 0.5 9.5 5 5 9.5 0.5 5Z" fill="none" stroke="currentColor" />
-                </svg>
-                {/* Small panels show just the mark. */}
-                <span className="hidden @[13rem]:inline">Photography to come</span>
-              </span>
-            </div>
+          <div role="img" aria-label={image?.alt ?? "Image to come"} className="@container absolute inset-0 text-ink/35">
+            {/* Crop marks in the corners. */}
+            <span className="absolute top-3 left-3 size-3 border-t border-l border-current" />
+            <span className="absolute top-3 right-3 size-3 border-t border-r border-current" />
+            <span className="absolute bottom-3 left-3 size-3 border-b border-l border-current" />
+            <span className="absolute right-3 bottom-3 size-3 border-r border-b border-current" />
+            <span className="label absolute inset-0 grid place-items-center">
+              <span className="hidden @[10rem]:inline">Image to come</span>
+              <span className="@[10rem]:hidden">+</span>
+            </span>
           </div>
         )}
       </div>
-      {caption && <figcaption className="mt-3 text-xs text-ink-soft">{caption}</figcaption>}
+      {showCaption && image?.caption && <figcaption className="label mt-3 text-ink-soft">{image.caption}</figcaption>}
     </figure>
   );
 }

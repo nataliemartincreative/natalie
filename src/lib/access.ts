@@ -1,14 +1,14 @@
 /**
- * Shared-password access for buyers. The access cookie holds an HMAC of a
+ * Password access while the site is private. The access cookie holds an HMAC of a
  * fixed message keyed by SITE_PASSWORD, so it can't be forged without the
  * password and every cookie stops working when the password changes.
  * Uses Web Crypto, so it runs in the proxy and in server actions alike.
  */
 
-export const ACCESS_COOKIE = "dh_access";
+export const ACCESS_COOKIE = "site_access";
 export const ACCESS_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 
-const MESSAGE = new TextEncoder().encode("diamond-home-access-v1");
+const MESSAGE = new TextEncoder().encode("portfolio-access-v1");
 
 export const sitePassword = () => process.env.SITE_PASSWORD || undefined;
 
@@ -42,7 +42,7 @@ export async function hasAccess(cookie: string | undefined): Promise<boolean> {
   return !!cookie && safeEqual(cookie, await accessToken(password));
 }
 
-/** Only same-site paths, so the redirect after sign-in can't send buyers elsewhere. */
+/** Only same-site paths, so the redirect after sign-in can't send visitors elsewhere. */
 export function safeNext(value: unknown): string {
   const next = typeof value === "string" ? value : "";
   return next.startsWith("/") && !next.startsWith("//") && !next.startsWith("/\\") ? next : "/";

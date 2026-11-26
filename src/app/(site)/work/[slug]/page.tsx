@@ -1,100 +1,80 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Container, Facts, ProductCard, SectionHeading } from "@/components/blocks";
 import { Figure } from "@/components/figure";
-import { getBrand, getTechnique, getWork, productsByStyle, work } from "@/content/portfolio";
+import { getProject, nextProject, projects } from "@/content/site";
 
+// Only projects in the content file exist; anything else is a 404.
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return work.map((w) => ({ slug: w.slug }));
+  return projects.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/work/[slug]">): Promise<Metadata> {
-  const item = getWork((await params).slug);
-  return item ? { title: item.title, description: item.summary } : {};
+  const project = getProject((await params).slug);
+  return project ? { title: project.title, description: project.summary } : {};
 }
 
-export default async function WorkPage({ params }: PageProps<"/work/[slug]">) {
-  const item = getWork((await params).slug);
-  if (!item) notFound();
-  const brand = getBrand(item.brand)!;
-  const items = productsByStyle(item.products);
-  const materials = [...new Set(items.map((p) => p.material))];
+export default async function ProjectPage({ params }: PageProps<"/work/[slug]">) {
+  const project = getProject((await params).slug);
+  if (!project) notFound();
+  const index = projects.indexOf(project);
+  const next = nextProject(project.slug);
+
+  const meta = [
+    { label: "Year", value: project.year },
+    { label: "Discipline", value: project.disciplines.join(", ") },
+    ...(project.client ? [{ label: "Client", value: project.client }] : []),
+  ];
 
   return (
-    <>
-      <Container className="pt-16 pb-14 md:pt-24">
-        <div className="fade-up max-w-4xl">
-          <p className="eyebrow">
-            <Link href={`/${brand.slug}`} className="hover:text-ink hover:underline">
-              {brand.name}
-            </Link>{" "}
-            · Work
-          </p>
-          <h1 className="display mt-5 text-6xl md:text-8xl">{item.title}</h1>
-          <p className="display mt-6 max-w-2xl text-2xl italic text-ink-soft md:text-3xl">{item.summary}</p>
-        </div>
-      </Container>
+    <article>
+      <header className="fade-up px-4 pt-10 pb-12 sm:px-6 md:pt-16">
+        <p className="label text-ink-soft">
+          <span className="text-signal">{String(index + 1).padStart(2, "0")}</span> / {String(projects.length).padStart(2, "0")}
+        </p>
+        <h1 className="display mt-6 text-[17vw] leading-[0.85] md:text-[11vw]">{project.title}</h1>
+      </header>
 
-      <Container>
-        <Figure image={item.hero} tint={brand.tint} aspect="16 / 8" sizes="100vw" priority />
-      </Container>
-
-      <Container className="mt-14 grid gap-12 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:gap-20">
-        <div className="grid content-start gap-5 text-base md:text-[17px] md:leading-relaxed">
-          {item.body.map((p) => (
-            <p key={p}>{p}</p>
+      <div className="grid gap-10 border-y border-ink px-4 py-8 sm:px-6 md:grid-cols-[1fr_1.4fr] md:gap-16">
+        <dl className="grid grid-cols-2 gap-x-6 gap-y-5 self-start sm:grid-cols-3 md:grid-cols-1">
+          {meta.map((m) => (
+            <div key={m.label}>
+              <dt className="label text-ink-soft">{m.label}</dt>
+              <dd className="mt-1">{m.value}</dd>
+            </div>
+          ))}
+        </dl>
+        <div className="grid gap-4">
+          <p className="display text-3xl leading-tight md:text-4xl">{project.summary}</p>
+          {project.body.map((p) => (
+            <p key={p} className="max-w-2xl text-ink-soft">
+              {p}
+            </p>
           ))}
         </div>
-        <Facts
-          items={[
-            {
-              label: "Brand",
-              value: (
-                <Link href={`/${brand.slug}`} className="underline underline-offset-4 hover:no-underline">
-                  {brand.name}
-                </Link>
-              ),
-            },
-            { label: "Pieces", value: String(items.length) },
-            ...(materials.length ? [{ label: "Material", value: materials.join(", ") }] : []),
-            {
-              label: "Packaging",
-              value: item.techniques.map((slug, i) => (
-                <span key={slug}>
-                  {i > 0 && ", "}
-                  <Link href={`/techniques#${slug}`} className="underline underline-offset-4 hover:no-underline">
-                    {getTechnique(slug)?.name}
-                  </Link>
-                </span>
-              )),
-            },
-          ]}
-        />
-      </Container>
+      </div>
 
-      {item.gallery.length > 0 && (
-        <Container className="mt-20 grid gap-5 sm:grid-cols-2 md:gap-8">
-          {item.gallery.map((img) => (
-            <Figure key={img.alt} image={img} tint={brand.tint} aspect="4 / 5" caption={img.alt} />
-          ))}
-        </Container>
-      )}
+      <div className="mt-4 grid gap-4 px-4 sm:grid-cols-2 sm:px-6">
+        {project.images.map((img, i) => (
+          <Figure
+            key={`${img.alt}-${i}`}
+            image={img}
+            priority={i === 0}
+            // Landscape images span both columns; portrait ones pair up.
+            className={(img.aspect ?? "3 / 2") === "3 / 2" || project.images.length === 1 ? "sm:col-span-2" : ""}
+            sizes="(min-width: 640px) 50vw, 100vw"
+          />
+        ))}
+      </div>
 
-      {items.length > 0 && (
-        <Container className="mt-28">
-          <SectionHeading eyebrow={brand.name} title="Pieces" />
-          <ul className="mt-10 grid grid-cols-2 gap-x-5 gap-y-12 md:grid-cols-4 md:gap-x-8">
-            {items.map((p) => (
-              <li key={p.styleNumber}>
-                <ProductCard product={p} tint={brand.tint} />
-              </li>
-            ))}
-          </ul>
-        </Container>
+      {projects.length > 1 && (
+        <Link href={`/work/${next.slug}`} className="group mt-24 block border-t border-ink px-4 pt-4 pb-10 hover:bg-ink hover:text-paper sm:px-6">
+          <span className="label text-ink-soft group-hover:text-signal">Next project →</span>
+          <span className="display mt-4 block text-[14vw] leading-[0.85] group-hover:italic md:text-[9vw]">{next.title}</span>
+        </Link>
       )}
-    </>
+    </article>
   );
 }
