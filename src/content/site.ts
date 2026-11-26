@@ -43,7 +43,7 @@ export const site = {
   role: "Designer",
   /** The opening sentence on the home page. */
   statement:
-    "I shape how brands are held and felt. Thoughtful packaging, honest design and practical solutions, made with intention and sharpened by AI.",
+    "I shape how brands are held and felt. Thoughtful packaging, honest design and practical solutions, made with intention and accelerated by AI.",
   /** Short description used for the browser tab and link previews. */
   description: "Packaging, brand identity and art direction.",
   /** The large opening lines at the top of the about text, one per line. */
