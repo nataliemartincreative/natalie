@@ -43,7 +43,7 @@ export const site = {
   role: "Designer",
   /** The opening sentence on the home page. */
   statement:
-    "I shape the things people hold. Packaging, surfaces, the quiet weight of a well-made object, each made with intention, rooted in truth and built to solve something real. AI is one of my tools; the instinct is still human.",
+    "I shape how brands are held and felt. Thoughtful packaging, honest design and practical solutions, made with intention and sharpened by new tools.",
   /** Short description used for the browser tab and link previews. */
   description: "Packaging, brand identity and art direction.",
   /** The large opening lines at the top of the about text, one per line. */
