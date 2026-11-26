@@ -53,7 +53,7 @@ export const site = {
     "I’m particularly drawn to the physicality of things and the systems behind it. I enjoy creating structure from chaos and ensuring every detail serves a purpose.",
     "As industries evolve, I’ve embraced new tools that help accelerate workflows and unlock new possibilities. Ultimately, I’m driven by creating thoughtful, intentional design that connects people and brands with clarity and purpose.",
   ],
-  capabilities: ["Packaging", "Brand identity", "Art direction", "Illustration", "Photography"],
+  capabilities: ["Packaging", "Brand identity", "Art direction"],
   /** e.g. { label: "Email", href: "mailto:..." }, { label: "Instagram", href: "https://instagram.com/..." } */
   contact: [] as ContactLink[],
 };
@@ -92,7 +92,7 @@ export const projects: Project[] = [
     slug: "project-three",
     title: "Project Three",
     year: "2025",
-    disciplines: ["Art direction", "Photography"],
+    disciplines: ["Art direction"],
     summary: "Placeholder project. Replace with a short line about the work.",
     cover: { alt: "Project Three cover", tint: "#5d5a2b" },
     body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
@@ -105,7 +105,7 @@ export const projects: Project[] = [
     slug: "project-four",
     title: "Project Four",
     year: "2025",
-    disciplines: ["Illustration"],
+    disciplines: ["Packaging", "Brand identity"],
     summary: "Placeholder project. Replace with a short line about the work.",
     cover: { alt: "Project Four cover", tint: "#4a2f57" },
     body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
