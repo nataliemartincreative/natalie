@@ -104,20 +104,26 @@ export const projects: Project[] = [
       { alt: "Deck detail", aspect: "4 / 5", tint: "#2a2a2a" },
     ],
   },
-  // PLACEHOLDER projects: replace with your own work.
   {
-    slug: "project-three",
-    title: "Project Three",
-    year: "2025",
-    disciplines: ["Art direction"],
-    summary: "Placeholder project. Replace with a short line about the work.",
-    cover: { alt: "Project Three cover", tint: "#5d5a2b" },
-    body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
+    slug: "alloy",
+    title: "Alloy Arts District",
+    disciplines: ["Brand Experience", "Strategy", "Placemaking"],
+    client: "Carmel Partners",
+    summary:
+      "Naming, brand identity and public art curation for ALLOY, Carmel Partners’ mixed-use development in the Los Angeles Arts District.",
+    body: [
+      "From the project’s start, cultural research, audience analysis and lifestyle studies informed community engagement, the name, the identity and the public art program.",
+      "Developed alongside award-winning architecture and planning teams, the place centers on a retail paseo along a preserved historic rail spur, with rooftop gardens, creative offices, ground-floor retail and a 35-story residential tower, all tied to an identity rooted in the district’s creative legacy.",
+    ],
+    // Image files go in public/work/alloy/; add `src` once each is there.
+    cover: { alt: "ALLOY in the Los Angeles Arts District", aspect: "16 / 9", tint: "#4f555b" },
     images: [
-      { alt: "Project Three image 1", aspect: "4 / 5" },
-      { alt: "Project Three image 2", aspect: "4 / 5" },
+      { alt: "ALLOY brand identity", aspect: "16 / 9", tint: "#2f3438" },
+      { alt: "ALLOY detail", aspect: "4 / 5", tint: "#7a4a35" },
+      { alt: "ALLOY detail", aspect: "4 / 5", tint: "#4f555b" },
     ],
   },
+  // PLACEHOLDER project: replace with your own work.
   {
     slug: "project-four",
     title: "Project Four",
