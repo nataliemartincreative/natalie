@@ -88,6 +88,7 @@ export const projects: Project[] = [
     title: "Kraftwerk",
     disciplines: ["Brand Experience", "Strategy"],
     client: "Kraftwerk × Beautiful Losers",
+    studio: "SNG GRP",
     summary:
       "A limited-edition skateboard collection with the art collective Beautiful Losers, marking Kraftwerk’s nine-night residency with the LA Philharmonic at Walt Disney Concert Hall.",
     body: [
