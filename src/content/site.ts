@@ -20,9 +20,12 @@ export interface Img {
 export interface Project {
   slug: string;
   title: string;
-  year: string;
+  year?: string;
+  /** Shown as "Project scope". */
   disciplines: string[];
   client?: string;
+  /** The studio or agency the work was done under. */
+  studio?: string;
   /** Software or techniques, shown with the project details. */
   tools?: string[];
   /** One or two sentences shown under the title. */
@@ -58,23 +61,29 @@ export const site = {
   contact: [] as ContactLink[],
 };
 
-// PLACEHOLDER projects: replace with your own work.
 export const projects: Project[] = [
   {
-    slug: "project-one",
-    title: "Project One",
-    year: "2026",
-    disciplines: ["Packaging"],
-    tools: ["Illustrator", "Photoshop"],
-    summary: "Placeholder project. Replace with a short line about the work.",
-    cover: { alt: "Project One cover", tint: "#7a3b2e" },
-    body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
+    slug: "beezoo",
+    title: "BEEZOO",
+    disciplines: ["Brand Experience", "Strategy"],
+    client: "Beezoo",
+    studio: "SNG GRP",
+    summary:
+      "A graphic identity and sustainable packaging system for Beezoo, the LA caterer that has fed the city’s production industry since 2010.",
+    body: [
+      "Founder Chanez Belkebir blends traditional Middle Eastern flavors with European and Asian techniques, using organic, sustainably sourced ingredients prepared fresh daily.",
+      "The identity draws on her multicultural heritage and the company’s environmental commitment, carried through to plant-based utensils and biodegradable packaging that put the mission in every customer’s hands.",
+    ],
+    // Image files go in public/work/beezoo/ with these names; add `src` once each is there.
+    cover: { alt: "Beezoo salad bowl with the BEEZOO label, seen from above", aspect: "16 / 9", tint: "#2b302d" }, // 01-salad-bowl.jpg
     images: [
-      { alt: "Project One image 1", aspect: "3 / 2" },
-      { alt: "Project One image 2", aspect: "4 / 5" },
-      { alt: "Project One image 3", aspect: "4 / 5" },
+      { alt: "BEEZOO wordmark with letter-spacing measurements", aspect: "16 / 9", tint: "#3a3a3a" }, // 02-wordmark.jpg
+      { alt: "BEEZOO card and a wooden stamp with a round BEEZOO stamp mark", aspect: "16 / 9", tint: "#5a4a3a" }, // 03-card-and-stamp.jpg
+      { alt: "Identity development pinned up on the studio wall", aspect: "3 / 2", tint: "#7a5c3a" }, // 04-process-wall.jpg
+      { alt: "North Star: the restrained, minimal reference that guided the identity", aspect: "16 / 9", tint: "#4a4a4a" }, // 05-north-star.jpg
     ],
   },
+  // PLACEHOLDER projects: replace with your own work.
   {
     slug: "project-two",
     title: "Project Two",

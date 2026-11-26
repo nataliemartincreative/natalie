@@ -17,6 +17,12 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
   return project ? { title: project.title, description: project.summary } : {};
 }
 
+/** True for wider-than-tall ratios such as "16 / 9" (the default is 3 / 2). */
+function isLandscape(aspect = "3 / 2") {
+  const [w, h] = aspect.split("/").map(Number);
+  return w > h;
+}
+
 export default async function ProjectPage({ params }: PageProps<"/work/[slug]">) {
   const project = getProject((await params).slug);
   if (!project) notFound();
@@ -26,7 +32,8 @@ export default async function ProjectPage({ params }: PageProps<"/work/[slug]">)
   const details = [
     { label: "Project scope", value: project.disciplines.join(", ") },
     ...(project.client ? [{ label: "Client", value: project.client }] : []),
-    { label: "Year", value: project.year },
+    ...(project.studio ? [{ label: "Studio", value: project.studio }] : []),
+    ...(project.year ? [{ label: "Year", value: project.year }] : []),
     ...(project.tools?.length ? [{ label: "Tools used", value: project.tools.join(", ") }] : []),
   ];
 
@@ -63,8 +70,8 @@ export default async function ProjectPage({ params }: PageProps<"/work/[slug]">)
               key={`${img.alt}-${i}`}
               image={img}
               sizes="(min-width: 640px) 50vw, 100vw"
-              // Landscape images span both columns; portrait ones pair up.
-              className={(img.aspect ?? "3 / 2") === "3 / 2" || rest.length === 1 ? "sm:col-span-2" : ""}
+              // Landscape images span both columns; portrait and square ones pair up.
+              className={isLandscape(img.aspect) || rest.length === 1 ? "sm:col-span-2" : ""}
             />
           ))}
         </Container>
