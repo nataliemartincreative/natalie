@@ -1,0 +1,131 @@
+/**
+ * Everything the site shows lives here: your name, intro, about text,
+ * contact links and projects. Edit this file to change any of it.
+ *
+ * Images go in /public (e.g. public/work/project-one/cover.jpg) and are
+ * referenced by path ("/work/project-one/cover.jpg"). Leave `src` out and the
+ * page shows an "Image to come" panel in its place.
+ */
+
+export interface Img {
+  src?: string;
+  alt: string;
+  /** CSS aspect ratio, e.g. "4 / 5". Defaults to 3 / 2. */
+  aspect?: string;
+  caption?: string;
+  /** Placeholder color shown until `src` is set. */
+  tint?: string;
+}
+
+export interface Project {
+  slug: string;
+  title: string;
+  year?: string;
+  /** Shown as "Project scope". */
+  disciplines: string[];
+  client?: string;
+  /** The studio or agency the work was done under. */
+  studio?: string;
+  /** Software or techniques, shown with the project details. */
+  tools?: string[];
+  /** One or two sentences shown under the title. */
+  summary: string;
+  body: string[];
+  cover?: Img;
+  images: Img[];
+}
+
+export interface ContactLink {
+  label: string;
+  href: string;
+}
+
+// PLACEHOLDER: confirm the name and role.
+export const site = {
+  name: "Natalie Martin",
+  role: "Designer",
+  /** The opening sentence on the home page. */
+  statement:
+    "I shape how brands are held and felt. Thoughtful packaging, honest design and practical solutions, made with intention, using AI as a tool.",
+  /** Short description used for the browser tab and link previews. */
+  description: "Packaging, brand identity and art direction.",
+  /** The large opening lines at the top of the about text, one per line. */
+  aboutOpening: ["Design is a language.", "A form of communication beyond words."],
+  about: [
+    "I’ve always been drawn to the power of visual communication—the way thoughtful design, typography, and physical experiences can express what words alone sometimes cannot.",
+    "I’m particularly drawn to the physicality of things and the systems behind it. I enjoy creating structure from chaos and ensuring every detail serves a purpose.",
+    "As industries evolve, I’ve embraced new tools that help accelerate workflows and unlock new possibilities. Ultimately, I’m driven by creating thoughtful, intentional design that connects people and brands with clarity and purpose.",
+  ],
+  capabilities: ["Packaging", "Brand identity", "Art direction"],
+  /** e.g. { label: "Email", href: "mailto:..." }, { label: "Instagram", href: "https://instagram.com/..." } */
+  contact: [] as ContactLink[],
+};
+
+export const projects: Project[] = [
+  {
+    slug: "beezoo",
+    title: "BEEZOO",
+    disciplines: ["Brand Experience", "Strategy"],
+    client: "Beezoo",
+    studio: "SNG GRP",
+    summary:
+      "A graphic identity and sustainable packaging system for Beezoo, the LA caterer that has fed the city’s production industry since 2010.",
+    body: [
+      "Founder Chanez Belkebir blends traditional Middle Eastern flavors with European and Asian techniques, using organic, sustainably sourced ingredients prepared fresh daily.",
+      "The identity draws on her multicultural heritage and the company’s environmental commitment, carried through to plant-based utensils and biodegradable packaging that put the mission in every customer’s hands.",
+    ],
+    // Image files go in public/work/beezoo/ with these names; add `src` once each is there.
+    cover: { alt: "Beezoo salad bowl with the BEEZOO label, seen from above", aspect: "16 / 9", tint: "#2b302d" }, // 01-salad-bowl.jpg
+    images: [
+      { alt: "BEEZOO wordmark with letter-spacing measurements", aspect: "16 / 9", tint: "#3a3a3a" }, // 02-wordmark.jpg
+      { alt: "BEEZOO card and a wooden stamp with a round BEEZOO stamp mark", aspect: "16 / 9", tint: "#5a4a3a" }, // 03-card-and-stamp.jpg
+      { alt: "Identity development pinned up on the studio wall", aspect: "3 / 2", tint: "#7a5c3a" }, // 04-process-wall.jpg
+      { alt: "North Star: the restrained, minimal reference that guided the identity", aspect: "16 / 9", tint: "#4a4a4a" }, // 05-north-star.jpg
+    ],
+  },
+  // PLACEHOLDER projects: replace with your own work.
+  {
+    slug: "project-two",
+    title: "Project Two",
+    year: "2026",
+    disciplines: ["Brand identity"],
+    summary: "Placeholder project. Replace with a short line about the work.",
+    cover: { alt: "Project Two cover", tint: "#2f4a5c" },
+    body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
+    images: [
+      { alt: "Project Two image 1", aspect: "3 / 2" },
+      { alt: "Project Two image 2", aspect: "3 / 2" },
+    ],
+  },
+  {
+    slug: "project-three",
+    title: "Project Three",
+    year: "2025",
+    disciplines: ["Art direction"],
+    summary: "Placeholder project. Replace with a short line about the work.",
+    cover: { alt: "Project Three cover", tint: "#5d5a2b" },
+    body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
+    images: [
+      { alt: "Project Three image 1", aspect: "4 / 5" },
+      { alt: "Project Three image 2", aspect: "4 / 5" },
+    ],
+  },
+  {
+    slug: "project-four",
+    title: "Project Four",
+    year: "2025",
+    disciplines: ["Packaging", "Brand identity"],
+    summary: "Placeholder project. Replace with a short line about the work.",
+    cover: { alt: "Project Four cover", tint: "#4a2f57" },
+    body: ["Describe the brief, your approach and the outcome in a few short paragraphs."],
+    images: [{ alt: "Project Four image 1", aspect: "3 / 2" }],
+  },
+];
+
+export const getProject = (slug: string) => projects.find((p) => p.slug === slug);
+
+/** The project after this one, wrapping around to the first. */
+export function nextProject(slug: string): Project {
+  const i = projects.findIndex((p) => p.slug === slug);
+  return projects[(i + 1) % projects.length];
+}

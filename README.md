@@ -1,69 +1,54 @@
-# Natalie's Favorite Website Ever
+# Natalie Martin
 
-A yellow, Helvetica-set dashboard built with Next.js 16 (App Router, React 19,
-Tailwind CSS 4, TypeScript). A cinematic intro plays once per browser session.
+A personal portfolio for all my creative work: a simple site with a statement,
+a grid of featured work, project pages and an about page, modeled on the
+structure of malloryblackwell.com. Black type on white, no accent color.
+Private behind a password for now. Built with Next.js 16, React 19
+and Tailwind CSS 4; every page is static.
 
 ## Pages
 
-- **Home**: `/`
-- **Projects**: `/projects`. A spreadsheet-style list of projects. Add one with
-  **New project**, or bring in a spreadsheet with **Import** or by dragging an
-  XLS/XLSX/CSV file onto the page. Each row becomes a project.
-- **Project**: `/projects/[id]`. Status, UPC-A barcode (with SVG download) and
-  every imported column as details.
-- **Brand**: `/brands/[slug]`. The brand's logo, colors and fonts (read from
-  its website) and all of its projects.
-- **Purchase orders**: `/purchase-orders`. One per imported factory sheet; the
-  sheet's header block (factory, quote date, PO #…) becomes the purchase order.
+| Path | What it is |
+| --- | --- |
+| `/` | Statement and a two-column grid of featured work |
+| `/work/[slug]` | One page per project: details, text and images |
+| `/about` | Capabilities, bio and contact links |
+| `/enter` | Password page |
 
-### New brands
+## Editing content
 
-When an import introduces a brand the app hasn't seen, it searches the web for
-every brand using that name (Claude with web search, `/api/brands/research`)
-and asks you to pick the right one, or paste its website. The chosen site is
-read for its logo, colors and fonts (`/api/brands/elements`). Research needs
-`ANTHROPIC_API_KEY`; pasting a website works without it.
+Everything lives in [`src/content/site.ts`](src/content/site.ts):
 
-### How imports map columns
+- `statement`: the opening sentence on the home page.
+- `about`, `capabilities`, `contact`: the about page and footer links.
+- `projects`: copy an entry and give it a new `slug` to add one.
 
-The first sheet is read in the browser. Plain tables (header in the first row)
-and vendor forms (a header block, then a one- or two-row table header, then
-products and a totals row) both work. Values are kept exactly as Excel shows
-them. The style number is the project's ID, so re-importing an updated sheet
-updates projects instead of duplicating them. Columns are matched by header:
+Images go in `public/` (e.g. `public/work/project-one/cover.jpg`) and are
+referenced as `"/work/project-one/cover.jpg"`. The `cover` is the square image
+in the home grid and the wide hero on the project page; `images` follow
+below it. Set `aspect` (e.g. `"4 / 5"`) to match each image: landscape (3 / 2)
+images run full width, others pair up side by side. Anything without a `src`
+shows an "Image to come" panel, in its `tint` color if one is set.
 
-| Field   | Headers it looks for                                    |
-| ------- | ------------------------------------------------------- |
-| Style # | Style Number, Style, SKU, Item Number, Model            |
-| Brand   | Label Brand, Brand Name, Brand                          |
-| Name    | Description (long), Product Name, Name, Title, ...      |
-| Barcode | UPC-A, UPC, UPC Code, Barcode, GTIN, EAN                |
-| Status  | Status, Stage                                           |
+## Password
 
-Unit size L/W/H columns in cm and inches become the project's dimensions.
-Every other column is saved on the project as a detail. Barcodes that Excel
-stored as numbers get their leading zeros restored.
+While `SITE_PASSWORD` is set, every page asks for it. Set it in Vercel →
+Project → Settings → Environment Variables (tick Production and Preview).
+Visitors stay signed in for 30 days; changing the password signs everyone
+out. In production the site stays locked until the password is set. Search
+engines are asked not to index it.
 
-Projects, purchase orders and brands are stored in the browser (localStorage,
-with dieline files in IndexedDB) for now. See
-`src/lib/projects.ts` to move them to a database.
-
-## Barcode API
-
-`GET /api/barcode?code=03600029145` returns a UPC-A barcode as SVG, generated
-with [bwip-js](https://github.com/metafloor/bwip-js). Pass 11 digits to have the
-check digit added, or 12 to have it verified. Add `&download=1` to download it.
-
-## Environment variables
-
-See `.env.example`. Set them in Vercel → Project → Settings → Environment
-Variables, or in `.env.local` for local development.
+To make the site public later, delete `src/proxy.ts` and the `robots`
+settings in `src/app/layout.tsx` and `src/app/robots.ts`.
 
 ## Development
 
 ```bash
 npm install
-npm run dev     # http://localhost:3000
+SITE_PASSWORD=choose-one npm run dev   # or leave it unset to skip the password locally
 npm run lint
 npm run build
 ```
+
+Fonts (Instrument Serif, Inter) are self-hosted from `src/fonts` under the
+SIL Open Font License.

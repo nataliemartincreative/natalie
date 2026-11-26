@@ -1,31 +1,17 @@
 @import "tailwindcss";
 
-/* Desktop sidebar collapsed (set on <html> before first paint). */
-@custom-variant collapsed {
-  @media (width >= 48rem) {
-    &:where([data-sidebar="collapsed"] *) {
-      @slot;
-    }
-  }
+@theme {
+  /* Black on white, with a mid gray for secondary text. */
+  --color-paper: #ffffff;
+  --color-panel: #f1f0ee;
+  --color-ink: #111111;
+  --color-mute: #6b6b6b;
+  --color-rule: #e3e1de;
 }
 
-@theme {
-  --color-sun: #ffd60a;
-  --color-sun-deep: #f5c400;
-  --color-sun-pale: #ffe766;
-  --color-ink: #0b0b0b;
-  --color-ink-soft: #3a3200;
-
-  --font-sans: "Helvetica Neue", Helvetica, Arial, "Nimbus Sans", sans-serif;
-
-  --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-  }
+@theme inline {
+  --font-serif: var(--font-serif-face), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-sans-face), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
@@ -35,26 +21,54 @@
   }
 
   body {
-    background: var(--color-sun);
+    background: var(--color-paper);
     color: var(--color-ink);
   }
 
   ::selection {
     background: var(--color-ink);
-    color: var(--color-sun);
+    color: var(--color-paper);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-ink);
-    outline-offset: 2px;
+    outline: 1.5px solid var(--color-ink);
+    outline-offset: 3px;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
+/* Bold statement and heading type. */
+@utility headline {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+/* Small section labels above a rule. */
+@utility kicker {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+/* iOS zooms the page when a focused field's text is under 16px. */
+@media (width < 48rem) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fade-up {
+    animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
   }
 }
