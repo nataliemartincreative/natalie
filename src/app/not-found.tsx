@@ -11,9 +11,9 @@ export default function NotFound() {
       <div className="grid content-center">
         <p className="text-mute">404</p>
         <h1 className="headline mt-3 text-5xl md:text-7xl">
-          Nothing <span className="text-accent">here.</span>
+          Nothing here.
         </h1>
-        <Link href="/" className="mt-8 underline underline-offset-4 hover:text-accent">
+        <Link href="/" className="mt-8 font-medium transition-opacity hover:opacity-60">
           Back to the work →
         </Link>
       </div>

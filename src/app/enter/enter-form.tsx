@@ -23,17 +23,17 @@ export function EnterForm() {
         autoComplete="current-password"
         aria-invalid={!!state.error}
         aria-describedby={state.error ? "password-error" : undefined}
-        className="h-12 rounded-none border-0 border-b border-ink/60 bg-transparent px-0 text-base outline-none focus:border-accent aria-invalid:border-accent"
+        className="h-12 rounded-none border-0 border-b border-ink/60 bg-transparent px-0 text-base outline-none focus:border-ink aria-invalid:border-ink"
       />
       {state.error && (
-        <p id="password-error" role="alert" className="text-sm text-accent">
+        <p id="password-error" role="alert" className="text-sm font-medium">
           {state.error}
         </p>
       )}
       <button
         type="submit"
         disabled={pending}
-        className="mt-4 h-12 bg-ink font-semibold text-paper transition-colors hover:bg-accent disabled:opacity-60"
+        className="mt-4 h-12 bg-ink font-semibold text-paper transition-opacity hover:opacity-85 disabled:opacity-60"
       >
         {pending ? "Checking…" : "Enter →"}
       </button>

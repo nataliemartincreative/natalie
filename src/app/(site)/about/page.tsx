@@ -10,7 +10,7 @@ export default function AboutPage() {
       {/* Left column stays empty on wide screens, as on the reference site. */}
       <div className="hidden lg:block" aria-hidden />
       <section aria-labelledby="capabilities">
-        <h1 id="capabilities" className="headline text-3xl text-accent md:text-4xl">
+        <h1 id="capabilities" className="headline text-3xl text-mute md:text-4xl">
           Capabilities
         </h1>
         <ul className="mt-8 grid gap-1">
@@ -22,7 +22,7 @@ export default function AboutPage() {
         </ul>
       </section>
       <section aria-labelledby="about-me">
-        <h2 id="about-me" className="headline text-3xl text-accent md:text-4xl">
+        <h2 id="about-me" className="headline text-3xl text-mute md:text-4xl">
           About Me
         </h2>
         <div className="mt-8 grid gap-5 leading-relaxed">
@@ -38,7 +38,7 @@ export default function AboutPage() {
                   href={c.href}
                   target={c.href.startsWith("http") ? "_blank" : undefined}
                   rel="noreferrer"
-                  className="text-accent underline underline-offset-4 hover:no-underline"
+                  className="font-medium transition-opacity hover:opacity-60"
                 >
                   {c.label} ↗
                 </a>

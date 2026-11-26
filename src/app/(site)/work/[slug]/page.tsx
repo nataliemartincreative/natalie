@@ -43,7 +43,7 @@ export default async function ProjectPage({ params }: PageProps<"/work/[slug]">)
           <dl className="grid gap-2">
             {details.map((d) => (
               <div key={d.label}>
-                <dt className="inline text-sm font-medium tracking-wide uppercase underline underline-offset-4">{d.label}:</dt>{" "}
+                <dt className="inline text-sm font-medium tracking-wide text-mute uppercase">{d.label}:</dt>{" "}
                 <dd className="inline">{d.value}</dd>
               </div>
             ))}
@@ -75,9 +75,9 @@ export default async function ProjectPage({ params }: PageProps<"/work/[slug]">)
           <Link href={`/work/${next.slug}`} className="group flex items-end justify-between gap-6 border-t border-rule pt-8">
             <span>
               <span className="text-sm text-mute">Next project</span>
-              <span className="headline mt-2 block text-4xl group-hover:text-accent md:text-6xl">{next.title}</span>
+              <span className="headline mt-2 block text-4xl transition-opacity group-hover:opacity-60 md:text-6xl">{next.title}</span>
             </span>
-            <span aria-hidden className="headline text-4xl transition-transform group-hover:translate-x-2 group-hover:text-accent md:text-6xl">
+            <span aria-hidden className="headline text-4xl transition-transform group-hover:translate-x-2 md:text-6xl">
               →
             </span>
           </Link>

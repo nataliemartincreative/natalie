@@ -2,8 +2,8 @@
 
 A personal portfolio for all my creative work: a simple site with a statement,
 a grid of featured work, project pages and an about page, modeled on the
-structure of malloryblackwell.com. White background, black type, one orange
-accent. Private behind a password for now. Built with Next.js 16, React 19
+structure of malloryblackwell.com. Black type on white, no accent color.
+Private behind a password for now. Built with Next.js 16, React 19
 and Tailwind CSS 4; every page is static.
 
 ## Pages
@@ -19,8 +19,7 @@ and Tailwind CSS 4; every page is static.
 
 Everything lives in [`src/content/site.ts`](src/content/site.ts):
 
-- `statement`: the opening sentence. Wrap words in `*asterisks*` to pick
-  them out in orange.
+- `statement`: the opening sentence on the home page.
 - `about`, `capabilities`, `contact`: the about page and footer links.
 - `projects`: copy an entry and give it a new `slug` to add one.
 

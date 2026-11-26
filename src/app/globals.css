@@ -1,13 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  /* White ground, black type, one orange accent (4.5:1 on white). */
+  /* Black on white, with a mid gray for secondary text. */
   --color-paper: #ffffff;
   --color-panel: #f1f0ee;
   --color-ink: #111111;
   --color-mute: #6b6b6b;
   --color-rule: #e3e1de;
-  --color-accent: #cf430b;
 }
 
 @theme inline {
@@ -27,12 +26,12 @@
   }
 
   ::selection {
-    background: var(--color-accent);
+    background: var(--color-ink);
     color: var(--color-paper);
   }
 
   :focus-visible {
-    outline: 1.5px solid var(--color-accent);
+    outline: 1.5px solid var(--color-ink);
     outline-offset: 3px;
   }
 }

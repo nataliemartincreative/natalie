@@ -22,7 +22,7 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
                           href={c.href}
                           target={c.href.startsWith("http") ? "_blank" : undefined}
                           rel="noreferrer"
-                          className="underline underline-offset-4 hover:text-accent"
+                          className="transition-colors hover:text-ink"
                         >
                           {c.label}
                         </a>
@@ -36,7 +36,7 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
               </p>
             </div>
             <form action={signOut}>
-              <button type="submit" className="min-h-11 hover:text-accent">
+              <button type="submit" className="min-h-11 transition-colors hover:text-ink">
                 Sign out
               </button>
             </form>

@@ -28,7 +28,7 @@ export function SiteHeader({ name, social }: { name: string; social: ContactLink
                 key={l.href}
                 href={l.href}
                 aria-current={active(l.href) ? "page" : undefined}
-                className="flex min-h-11 items-center underline-offset-[6px] hover:text-accent aria-[current=page]:underline"
+                className="flex min-h-11 items-center text-mute transition-colors hover:text-ink aria-[current=page]:text-ink"
               >
                 {l.label}
               </Link>
@@ -39,7 +39,7 @@ export function SiteHeader({ name, social }: { name: string; social: ContactLink
                 href={s.href}
                 target={s.href.startsWith("http") ? "_blank" : undefined}
                 rel="noreferrer"
-                className="hidden min-h-11 items-center text-mute hover:text-accent sm:flex"
+                className="hidden min-h-11 items-center text-mute transition-colors hover:text-ink sm:flex"
               >
                 {s.label}
               </a>

@@ -20,19 +20,6 @@ export function Wordmark({ name, className = "" }: { name: string; className?: s
   );
 }
 
-/** Renders *starred* words in the accent color with an underline. */
-export function Highlighted({ text }: { text: string }) {
-  return text.split(/(\*[^*]+\*)/).map((part, i) =>
-    part.startsWith("*") && part.endsWith("*") ? (
-      <span key={i} className="text-accent underline decoration-2 underline-offset-[0.14em]">
-        {part.slice(1, -1)}
-      </span>
-    ) : (
-      <Fragment key={i}>{part}</Fragment>
-    ),
-  );
-}
-
 /** A label followed by a full-width rule. */
 export function SectionLabel({ children }: { children: React.ReactNode }) {
   return <h2 className="kicker border-b border-ink/80 pb-3">{children}</h2>;

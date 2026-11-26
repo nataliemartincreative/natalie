@@ -14,7 +14,7 @@ export default function EnterPage() {
       </div>
       <div className="fade-up grid content-center gap-12 py-16 md:grid-cols-[1.3fr_1fr] md:items-end md:gap-16">
         <h1 className="headline text-4xl sm:text-5xl md:text-6xl">
-          This site is <span className="text-accent underline decoration-2 underline-offset-[0.14em]">private</span> for now.
+          This site is private for now.
         </h1>
         <div className="w-full max-w-sm">
           <p className="text-mute">Enter the password to see the work.</p>

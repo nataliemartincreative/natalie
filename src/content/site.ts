@@ -41,12 +41,9 @@ export interface ContactLink {
 export const site = {
   name: "Natalie Martin",
   role: "Designer",
-  /**
-   * The opening sentence on the home page. Wrap words in *asterisks* to
-   * pick them out in the accent color.
-   */
+  /** The opening sentence on the home page. */
   statement:
-    "Natalie is a designer working in *packaging*, *brand identity* and *art direction*, making work that is clear, considered and a little unexpected.",
+    "Natalie is a designer working in packaging, brand identity and art direction, making work that is clear, considered and a little unexpected.",
   /** Short description used for the browser tab and link previews. */
   description: "Packaging, brand identity and art direction.",
   about: [
